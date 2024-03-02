@@ -55,14 +55,14 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
                 <textarea
                     onChange={(e) => setText(e.target.value)}
                     spellCheck={false}
-                    defaultValue={text}
+                    value={text}
                     className="bg-transparent resize-none p-4 outline-none w-full h-full text-[14px] text-white"
                 />
 
                 <div className="absolute flex items-center z-50 justify-center px-2 gap-2 bg-sidebar border-solid border-l-[1px] border-t-[1px] border-border right-0 bottom-0 h-6 rounded-tl-lg">
-                    <LuPencil className="text-neutral-300 text-[14px]" />
-                    <p className="text-neutral-300 text-[12px]">{text.trim().split(/\s+/).length + " words"}</p>
-                    <p className="text-neutral-300 text-[12px]">{text.length + " characters"}</p>
+                    <LuPencil className="text-neutral-400 text-[14px]" />
+                    <p className="text-neutral-400 text-[12px]">{(text.replaceAll(" ", "").length !== 0 ? text.trim().split(/\s+/).length : 0) + " words"}</p>
+                    <p className="text-neutral-400 text-[12px]">{text.length + " characters"}</p>
                 </div>
             </div>
         </>

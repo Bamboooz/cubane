@@ -18,7 +18,7 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header data-tauri-drag-region className="relative w-full pl-4 flex items-center justify-between h-10 bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border">
+            <header data-tauri-drag-region className="relative w-full pl-4 shadow-sm flex items-center justify-between h-10 bg-header border-solid border-b-[1px] border-r-[1px] border-border">
                 <div className="flex items-center justify-center z-50">
                     <button onClick={() => setOpenedFile("")} title="Home" className="flex items-center justify-center">
                         <img src={icon} className="w-6 h-6 rounded-sm" alt="logo" />

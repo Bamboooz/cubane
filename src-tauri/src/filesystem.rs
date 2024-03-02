@@ -38,21 +38,19 @@ pub fn verify_cubane_dir() -> Result<(), String> {
 #[tauri::command]
 pub fn create_file(file_name: &str) -> Result<(), String> {
     verify_cubane_dir().map_err(|err| format!("{}", err))?;
-
-    if let Err(err) = fs::File::create(cubane_path().join(file_name)) {
-        return Err(format!("Failed to create a file: {}.", err));
-    }
     
-    Ok(())
+    match fs::File::create(cubane_path().join(file_name)) {
+        Ok(_) => Ok(()),
+        Err(err) => Err(format!("Failed to create a file: {}.", err)),
+    }
 }
 
 #[tauri::command]
 pub fn delete_file(file_path: &str) -> Result<(), String> {
-    if let Err(err) = fs::remove_file(file_path) {
-        return Err(format!("Failed to delete a file: {}.", err));
+    match fs::remove_file(file_path) {
+        Ok(_) => Ok(()),
+        Err(err) => Err(format!("Failed to delete a file: {}.", err)),
     }
-    
-    Ok(())
 }
 
 #[tauri::command]
@@ -74,21 +72,18 @@ pub fn read_directory() -> Result<Vec<FileEntry>, String> {
     Ok(files)
 }
 
-
 #[tauri::command]
-pub fn read_file(file_path: &str) -> Result<(), String> {
-    if let Err(err) = fs::read_to_string(file_path) {
-        return Err(format!("Failed to read a file: {}.", err));
+pub fn read_file(file_path: &str) -> Result<String, String> {
+    match fs::read_to_string(file_path) {
+        Ok(contents) => Ok(contents),
+        Err(err) => Err(format!("Failed to read a file: {}.", err)),
     }
-    
-    Ok(())
 }
 
 #[tauri::command]
 pub fn write_file(file_path: &str, content: &str) -> Result<(), String> {
-    if let Err(err) = fs::write(file_path, content) {
-        return Err(format!("Failed to write to a file: {}.", err));
+    match fs::write(file_path, content) {
+        Ok(_) => Ok(()),
+        Err(err) => Err(format!("Failed to write to a file: {}.", err)),
     }
-    
-    Ok(())
 }

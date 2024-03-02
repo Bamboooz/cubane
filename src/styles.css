@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
+html, body, #root, .App {
     @apply font-sans;
     @apply h-full w-full;
+    @apply !overflow-hidden;
 }
 
 p, h1 {
@@ -16,7 +17,7 @@ p, h1 {
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-[#555] rounded-md;
+    @apply bg-header rounded-md;
 }
 
 ::-webkit-scrollbar-track {

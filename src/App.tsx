@@ -22,7 +22,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <div className="flex flex-col w-full h-full border-solid border-l-[1px] border-t-[1px] border-border overflow-hidden">
+            <div className="flex flex-col w-full h-full border-solid border-l-[1px] border-t-[1px] border-border">
                 <Header />
 
                 <Split

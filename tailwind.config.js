@@ -6,6 +6,7 @@ export default {
       colors: {
         "primary": "#1f2027",
         "sidebar": "#272831",
+        "header": "#393a42",
         "border": "#414248",
         "node": "#454757",
       },
