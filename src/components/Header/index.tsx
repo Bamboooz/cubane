@@ -2,23 +2,19 @@ import React, { useEffect, useState } from "react";
 import { appWindow } from "@tauri-apps/api/window";
 import { VscChromeMinimize, VscChromeMaximize, VscChromeClose } from "react-icons/vsc";
 
-import { getAppState } from "../../appState";
+import { getAppState } from "../../state/appState";
 import { getFile } from "../../utils/fs";
 
 import icon from "../../assets/icon.png";
 
 const Header: React.FC = () => {
-    const appState = getAppState();
+    const openedFile = getAppState("openedFile");
 
     const getName = (fileName: string) => {
         return fileName !== "" ? fileName : "Home";
     };
 
-    const [name, setName] = useState<string>(getName(appState.openedFile));
-
-    useEffect(() => {
-        setName(getName(appState.openedFile));
-    }, [appState.openedFile]);
+    const [name, setName] = useState<string>(getName(openedFile));
 
     return (
         <>

@@ -4,21 +4,17 @@ import Split from "react-split";
 import SideBar from "./components/Sidebar";
 import Header from "./components/Header";
 import Home from "./components/Home";
-import { getAppState } from "./appState";
+import { getAppState } from "./state/appState";
 import MarkdownEditor from "./components/Editor/Markdown";
 
 const App: React.FC = () => {
-    const appState = getAppState();
+    const openedFile = getAppState("openedFile");
 
     const getPageFromFile = (openedFile: string) => {
         return openedFile !== "" ? <MarkdownEditor /> : <Home />;
     };
 
-    const [page, setPage] = useState<React.ReactElement>(getPageFromFile(appState.openedFile));
-
-    useEffect(() => {
-        setPage(getPageFromFile(appState.openedFile))
-    }, [appState.openedFile]);
+    const [page, setPage] = useState<React.ReactElement>(getPageFromFile(openedFile));
 
     return (
         <>

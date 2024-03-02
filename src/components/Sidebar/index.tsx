@@ -10,7 +10,7 @@ type FileList = { files: Array<{ path: string; }> };
 const SideBar: React.FC = () => {
     const [files, setFiles] = useState<FileList>({ files: [] });
   
-    const update_file_list = () => {
+    const updateFileList = () => {
         const response = invoke("read_directory", {});
 
         response
@@ -22,20 +22,20 @@ const SideBar: React.FC = () => {
             });
     };
 
-    async function create_file() {
+    async function createFile() {
         await invoke("create_file", { fileName: "hey" });
     };
 
     // load files on app load and then do it only when user refreshes
     useEffect(() => {
-        update_file_list();
+        updateFileList();
     }, []);
     
     return (
         <>
             <div className="h-full flex flex-col items-center justify-start w-[230px] bg-sidebar border-solid border-r-[1px] border-border pt-4 o gap-4">
                 <div className="flex w-full items-center justify-between px-4 ">
-                    <button onClick={create_file} className="bg-transparent flex items-center justify-center border-solid border-[1px] border-border py-1 px-2 rounded-lg transition-colors hover:shadow-xl hover:bg-zinc-700">
+                    <button onClick={createFile} className="bg-transparent flex items-center justify-center border-solid border-[1px] border-border py-1 px-2 rounded-lg transition-colors hover:shadow-xl hover:bg-zinc-700">
                         <FiFilePlus className="text-neutral-300 text-[18px]" />
                     </button>
 
@@ -46,12 +46,12 @@ const SideBar: React.FC = () => {
 
                 <div className="w-full h-full flex flex-col items-center justify-start overflow-auto px-2 ">
                     {files.files.map((file, index) => (
-                        <FileNode key={index} name={file.path} />
+                        <FileNode key={index} filePath={file.path} />
                     ))}
                 </div>
 
                 <div className="p-2 flex items-center justify-center w-full">
-                    <button onClick={update_file_list} className="w-full h-8 flex items-center justify-center gap-1 rounded-lg bg bg-transparent transition-colors hover:bg-node hover:bg-opacity-50">
+                    <button onClick={updateFileList} className="w-full h-8 flex items-center justify-center gap-1 rounded-lg bg bg-transparent transition-colors hover:bg-node hover:bg-opacity-50">
                         <IoRefresh className="text-neutral-300 text-[16px]" />
                         <p className="text-neutral-300 text-[12px]">Refresh</p>
                     </button>

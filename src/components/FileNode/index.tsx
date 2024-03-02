@@ -2,27 +2,26 @@ import React from "react";
 
 import { cn } from "../../utils/tw";
 import { getFile, getFileIcon } from "../../utils/fs";
-import { getAppState, setAppState } from "../../appState";
+import { getAppState, setAppState } from "../../state/appState";
 
 interface FileNodeProps {
-    name: string;
+    filePath: string;
 }
 
-const FileNode: React.FC<FileNodeProps> = ({ name }) => {
-    const appState = getAppState();
-    const selected = appState.openedFile === name;
+const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
+    const openedFile = getAppState("openedFile");
 
-    const className = cn("w-full h-6 flex shrink-0 p-4 items-center justify-start rounded-lg gap-2", selected ? "bg-node" : "bg-transparent hover:bg-node hover:bg-opacity-50");
+    const className = cn("w-full h-6 flex shrink-0 p-4 items-center justify-start rounded-lg gap-2", openedFile === filePath ? "bg-node" : "bg-transparent hover:bg-node hover:bg-opacity-50");
 
     const selectFile = () => {
-        setAppState({ ...appState, openedFile: name });
+        setAppState("openedFile", filePath);
     };
 
     return (
         <>
             <button onClick={selectFile} className={className}>
-                {React.cloneElement(getFileIcon(name), { className: "text-neutral-300 text-[20px]" })}
-                <p className="text-[12px] text-neutral-300">{getFile(name).name}</p>
+                {React.cloneElement(getFileIcon(filePath), { className: "text-neutral-300 text-[20px]" })}
+                <p className="text-[12px] text-neutral-300">{getFile(filePath).name}</p>
             </button>
         </>
     );
