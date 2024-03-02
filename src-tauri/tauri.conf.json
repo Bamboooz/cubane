@@ -22,11 +22,11 @@
         "readFile": true,
         "writeFile": true,
         "readDir": true,
-        "copyFile": true,
-        "createDir": true,
-        "removeDir": true,
+        "copyFile": false,
+        "createDir": false,
+        "removeDir": false,
         "removeFile": true,
-        "renameFile": true,
+        "renameFile": false,
         "exists": true
       },
       "window": {

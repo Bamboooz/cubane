@@ -1,18 +1,15 @@
 use std::env;
 use std::path::{Path, PathBuf};
 use std::fs;
+use std::fs::File;
+use std::io::Read;
 
 use serde::Serialize;
 use lazy_static::lazy_static;
 
 #[derive(Serialize)]
-struct FileEntry {
+pub struct FileEntry {
     path: String,
-}
-
-#[derive(Serialize)]
-pub struct CommandResponse {
-    files: Vec<FileEntry>,
 }
 
 lazy_static! {
@@ -61,7 +58,7 @@ pub fn delete_file(file_name: &str) -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn read_directory() -> Result<CommandResponse, String> {
+pub fn read_directory() -> Result<Vec<FileEntry>, String> {
     verify_cubane_dir().map_err(|err| format!("{}", err))?;
 
     let mut files = Vec::new();
@@ -76,5 +73,21 @@ pub fn read_directory() -> Result<CommandResponse, String> {
         }
     }
 
-    Ok(CommandResponse { files })
+    Ok(files)
+}
+
+#[tauri::command]
+pub fn read_file(file_name: &str) -> Result<String, String> {
+    verify_cubane_dir().map_err(|err| format!("{}", err))?;
+
+    let file_path = cubane_path().join(file_name);
+    let mut file_content = String::new();
+
+    let mut file = File::open(&file_path)
+        .map_err(|err| format!("Failed to open file: {}", err))?;
+
+    file.read_to_string(&mut file_content)
+        .map_err(|err| format!("Failed to read file: {}", err))?;
+
+    Ok(file_content)
 }

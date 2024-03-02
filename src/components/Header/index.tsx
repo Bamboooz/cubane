@@ -17,14 +17,14 @@ const Header: React.FC = () => {
     
     return (
         <>
-            <header data-tauri-drag-region className="w-full pl-4 flex items-center justify-between h-10 bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border">
+            <header data-tauri-drag-region className="relative w-full pl-4 flex items-center justify-between h-10 bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border">
                 <img src={icon} className="h-[22px] w-[22px] rounded-sm" alt="logo" />
                 
-                <div className="absolute left-[50%] right-[50%]">
+                <div data-tauri-drag-region className="absolute w-full flex items-center justify-center">
                     <p data-tauri-drag-region className="text-neutral-300 text-[12px]">{getName()}</p>
                 </div>
 
-                <div className="flex h-full">
+                <div className="flex h-full z-50">
                     <button title="Minimize" onClick={() => appWindow.minimize()} className="flex items-center justify-center h-full w-12 bg-transparent transition-colors hover:bg-zinc-700">
                         <VscChromeMinimize className="text-neutral-300 text-[14px]" />
                     </button>

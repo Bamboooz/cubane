@@ -10,8 +10,8 @@ import MarkdownEditor from "./components/Editor/Markdown";
 const App: React.FC = () => {
     const openedFile = useAppState((state) => state.openedFile);
 
-    const getPageFromFile = (openedFile: string) => {
-        return openedFile !== "" ? <MarkdownEditor /> : <Home />;
+    const getPageFromFile = (file: string) => {
+        return file !== "" ? <MarkdownEditor openedFile={file} /> : <Home />;
     };
 
     const [page, setPage] = useState<React.ReactElement>(getPageFromFile(openedFile));
@@ -22,7 +22,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <div className="flex flex-col w-full h-full border-solid border-[1px] border-border overflow-hidden">
+            <div className="flex flex-col w-full h-full border-solid border-l-[1px] border-t-[1px] border-border overflow-hidden">
                 <Header />
 
                 <Split

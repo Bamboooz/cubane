@@ -22,6 +22,7 @@ fn main() {
             files::create_file,
             files::delete_file,
             files::read_directory,
+            files::read_file,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
