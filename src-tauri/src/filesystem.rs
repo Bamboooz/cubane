@@ -1,8 +1,6 @@
 use std::env;
 use std::path::{Path, PathBuf};
 use std::fs;
-use std::fs::File;
-use std::io::Read;
 
 use serde::Serialize;
 use lazy_static::lazy_static;
@@ -41,20 +39,20 @@ pub fn verify_cubane_dir() -> Result<(), String> {
 pub fn create_file(file_name: &str) -> Result<(), String> {
     verify_cubane_dir().map_err(|err| format!("{}", err))?;
 
-    let file_path = cubane_path().join(file_name);
-    fs::File::create(&file_path)
-        .map_err(|err| format!("Failed to create file: {}", err))
-        .map(|_| ())
+    if let Err(err) = fs::File::create(cubane_path().join(file_name)) {
+        return Err(format!("Failed to create a file: {}.", err));
+    }
+    
+    Ok(())
 }
 
 #[tauri::command]
-pub fn delete_file(file_name: &str) -> Result<(), String> {
-    verify_cubane_dir().map_err(|err| format!("{}", err))?;
-
-    let file_path = cubane_path().join(file_name);
-    fs::remove_file(&file_path)
-        .map_err(|err| format!("Failed to delete file: {}", err))
-        .map(|_| ())
+pub fn delete_file(file_path: &str) -> Result<(), String> {
+    if let Err(err) = fs::remove_file(file_path) {
+        return Err(format!("Failed to delete a file: {}.", err));
+    }
+    
+    Ok(())
 }
 
 #[tauri::command]
@@ -76,18 +74,21 @@ pub fn read_directory() -> Result<Vec<FileEntry>, String> {
     Ok(files)
 }
 
+
 #[tauri::command]
-pub fn read_file(file_name: &str) -> Result<String, String> {
-    verify_cubane_dir().map_err(|err| format!("{}", err))?;
+pub fn read_file(file_path: &str) -> Result<(), String> {
+    if let Err(err) = fs::read_to_string(file_path) {
+        return Err(format!("Failed to read a file: {}.", err));
+    }
+    
+    Ok(())
+}
 
-    let file_path = cubane_path().join(file_name);
-    let mut file_content = String::new();
-
-    let mut file = File::open(&file_path)
-        .map_err(|err| format!("Failed to open file: {}", err))?;
-
-    file.read_to_string(&mut file_content)
-        .map_err(|err| format!("Failed to read file: {}", err))?;
-
-    Ok(file_content)
+#[tauri::command]
+pub fn write_file(file_path: &str, content: &str) -> Result<(), String> {
+    if let Err(err) = fs::write(file_path, content) {
+        return Err(format!("Failed to write to a file: {}.", err));
+    }
+    
+    Ok(())
 }

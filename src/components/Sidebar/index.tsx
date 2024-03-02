@@ -45,14 +45,18 @@ const SideBar: React.FC = () => {
     
     return (
         <>
-            <div className="h-full flex flex-col items-center justify-start w-[230px] bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border pt-4 o gap-4">
-                <div className="flex w-full items-center justify-between px-4 ">
-                    <button onClick={newFile} className="bg-transparent flex items-center justify-center border-solid border-[1px] border-border py-1 px-2 rounded-lg transition-colors hover:shadow-xl hover:bg-zinc-700">
+            <div className="h-full flex flex-col items-center justify-start w-[230px] bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border pt-2 gap-2">
+                <div className="flex w-full items-center justify-center px-4 gap-2">
+                    <button title="Create file" onClick={newFile} className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors hover:bg-zinc-700">
                         <FiFilePlus className="text-neutral-300 text-[18px]" />
                     </button>
 
-                    <button onClick={removeFile} className="bg-transparent flex items-center justify-center border-solid border-[1px] border-border py-1 px-2 rounded-lg transition-colors hover:shadow-xl hover:bg-zinc-700">
+                    <button title="Delete file" onClick={removeFile} className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors hover:bg-zinc-700">
                         <FiTrash2 className="text-neutral-300 text-[18px]" />
+                    </button>
+
+                    <button title="Update file list" onClick={updateFileList} className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors hover:bg-zinc-700">
+                        <IoRefresh className="text-neutral-300 text-[18px]" />
                     </button>
                 </div>
 
@@ -60,13 +64,6 @@ const SideBar: React.FC = () => {
                     {files.map((file, index) => (
                         <FileNode key={index} filePath={file.path} />
                     ))}
-                </div>
-
-                <div className="px-2 py-1 flex items-center justify-center w-full">
-                    <button onClick={updateFileList} className="w-full h-8 flex items-center justify-center gap-1 rounded-lg bg bg-transparent transition-colors hover:bg-node hover:bg-opacity-50">
-                        <IoRefresh className="text-neutral-300 text-[16px]" />
-                        <p className="text-neutral-300 text-[12px]">Refresh</p>
-                    </button>
                 </div>
             </div>
         </>

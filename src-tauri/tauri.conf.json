@@ -23,7 +23,7 @@
         "writeFile": true,
         "readDir": true,
         "copyFile": false,
-        "createDir": false,
+        "createDir": true,
         "removeDir": false,
         "removeFile": true,
         "renameFile": false,

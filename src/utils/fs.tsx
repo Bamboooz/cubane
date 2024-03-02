@@ -14,7 +14,9 @@ async function getFileList(): Promise<FileList> {
 }
 
 const createFile = (fileName: string) => invoke("create_file", { fileName: fileName });
-const deleteFile = (filePath: string) => invoke("delete_file", { fileName: filePath });
+const deleteFile = (filePath: string) => invoke("delete_file", { filePath: filePath });
+const readFile = (filePath: string) => invoke("read_file", { filePath: filePath });
+const writeFile = (filePath: string, content: string) => invoke("write_file", { filePath: filePath, content: content });
 
 const getFile = (filePath: string) => {
     const baseName = filePath.replace(/^.*[\\\/]/, "")
@@ -33,4 +35,4 @@ const getFileIcon = (filePath: string) => {
 };
 
 export type { FileList };
-export { getFile, getFileIcon, getFileList, createFile, deleteFile };
+export { getFile, getFileIcon, getFileList, createFile, deleteFile, writeFile, readFile };
