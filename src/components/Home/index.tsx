@@ -1,7 +1,7 @@
-import React from 'react';
-import { appWindow } from '@tauri-apps/api/window'
+import React from "react";
+import { appWindow } from "@tauri-apps/api/window";
 
-const Home = () => {
+const Home: React.FC = () => {
     return (
         <>
             <div className="h-full w-full flex flex-col items-center justify-center gap-6">
