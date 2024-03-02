@@ -56,7 +56,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
                     onChange={(e) => setText(e.target.value)}
                     spellCheck={false}
                     value={text}
-                    className="bg-transparent resize-none p-4 outline-none w-full h-full text-[14px] text-white"
+                    className="bg-transparent resize-none p-4 outline-none w-full h-full text-[14px] text-neutral-300"
                 />
 
                 <div className="absolute flex items-center z-50 justify-center px-2 gap-2 bg-sidebar border-solid border-l-[1px] border-t-[1px] border-border right-0 bottom-0 h-6 rounded-tl-lg">
