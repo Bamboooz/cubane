@@ -1,26 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { appWindow } from "@tauri-apps/api/window";
 import { VscChromeMinimize, VscChromeMaximize, VscChromeClose } from "react-icons/vsc";
 
 import { getFile } from "../../utils/fs";
-import { useLocalStorage } from "../../hooks/useAppState";
+import { useAppState } from "../../state/appState";
 
 import icon from "../../assets/icon.png";
 
 const Header: React.FC = () => {
-    const [a, setA] = useLocalStorage("openedFile");
+    const openedFile = useAppState((state) => state.openedFile);
 
-    const getName = (fileName: string) => {
+    const getName = () => {
+        const fileName = getFile(openedFile).name;
         return fileName !== "" ? fileName : "Home";
     };
     
     return (
         <>
-            <header data-tauri-drag-region className="w-full pl-4 flex items-center justify-between h-10 bg-sidebar border-solid border-b-[1px] border-border">
+            <header data-tauri-drag-region className="w-full pl-4 flex items-center justify-between h-10 bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border">
                 <img src={icon} className="h-[22px] w-[22px] rounded-sm" alt="logo" />
                 
                 <div className="absolute left-[50%] right-[50%]">
-                    <p data-tauri-drag-region className="text-neutral-300 text-[12px]">{getName(getFile(a).name)}</p>
+                    <p data-tauri-drag-region className="text-neutral-300 text-[12px]">{getName()}</p>
                 </div>
 
                 <div className="flex h-full">

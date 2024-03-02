@@ -1,15 +1,20 @@
-import { defaultAppState } from "../const/state";
+import { useStore } from "zustand";
+import { createStore } from "zustand/vanilla";
 
-type AppState = { openedFile: string };
+interface AppState {
+    openedFile: string;
+    setOpenedFile: (filePath: string) => void;
+}
 
-const setAppState = (key: string, value: any) => {
-    localStorage.setItem(key, value);
-};
+const appStateStore = createStore<AppState>()((set) => ({
+    openedFile: "",
+    setOpenedFile: (filePath: string) => set((state: AppState) => ({ openedFile: filePath })),
+}));
 
-const getAppState = (key: string) => {
-    const item = localStorage.getItem(key);
-    return item ? item : defaultAppState[key as keyof AppState];
-};
+function useAppState(): AppState
+function useAppState<T>(selector: (state: AppState) => T): T
+function useAppState<T>(selector?: (state: AppState) => T) {
+    return useStore(appStateStore, selector!);
+}
 
-export type { AppState };
-export { getAppState, setAppState };
+export { useAppState };

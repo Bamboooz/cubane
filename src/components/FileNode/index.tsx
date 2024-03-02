@@ -2,19 +2,20 @@ import React from "react";
 
 import { cn } from "../../utils/tw";
 import { getFile, getFileIcon } from "../../utils/fs";
-import { getAppState, setAppState } from "../../state/appState";
+import { useAppState } from "../../state/appState";
 
 interface FileNodeProps {
     filePath: string;
 }
 
 const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
-    const openedFile = getAppState("openedFile");
+    const openedFile = useAppState((state) => state.openedFile);
+    const setOpenedFile = useAppState((state) => state.setOpenedFile);
 
     const className = cn("w-full h-6 flex shrink-0 p-4 items-center justify-start rounded-lg gap-2", openedFile === filePath ? "bg-node" : "bg-transparent hover:bg-node hover:bg-opacity-50");
 
     const selectFile = () => {
-        setAppState("openedFile", filePath);
+        setOpenedFile(filePath);
     };
 
     return (

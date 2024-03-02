@@ -33,7 +33,7 @@ const SideBar: React.FC = () => {
     
     return (
         <>
-            <div className="h-full flex flex-col items-center justify-start w-[230px] bg-sidebar border-solid border-r-[1px] border-border pt-4 o gap-4">
+            <div className="h-full flex flex-col items-center justify-start w-[230px] bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border pt-4 o gap-4">
                 <div className="flex w-full items-center justify-between px-4 ">
                     <button onClick={createFile} className="bg-transparent flex items-center justify-center border-solid border-[1px] border-border py-1 px-2 rounded-lg transition-colors hover:shadow-xl hover:bg-zinc-700">
                         <FiFilePlus className="text-neutral-300 text-[18px]" />
