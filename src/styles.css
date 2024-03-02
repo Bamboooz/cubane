@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+    @apply font-mono;
+    @apply h-full w-full;
+}
+
+p, h1 {
+    @apply select-none;
+}
+
+::-webkit-scrollbar {
+    @apply w-2;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-[#555] rounded-md;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+.split {
+    @apply flex flex-row;
+}
+
+.gutter {
+    background-color: #414248;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+    cursor: col-resize;
+}
