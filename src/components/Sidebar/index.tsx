@@ -3,7 +3,7 @@ import { FiFilePlus, FiTrash2 } from "react-icons/fi";
 import { IoRefresh } from "react-icons/io5";
 
 import { createFile, deleteFile, getFile } from "../../utils/fs";
-import FileNode from "../FileNode";
+import FileNode from "../File";
 import { useAppState } from "../../state/appState";
 
 const SideBar: React.FC = () => {
