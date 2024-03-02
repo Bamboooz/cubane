@@ -27,7 +27,9 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
     return (
         <>
             <div className="w-full h-full">
-                <p className="text-[12px] text-white">{text}</p>
+                <textarea spellCheck={false} defaultValue={text} className="bg-transparent p-4 outline-none w-full h-full text-[14px] text-white">
+
+                </textarea>
             </div>
         </>
     );
