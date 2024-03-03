@@ -477,6 +477,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "cubane"
+version = "0.0.1"
+dependencies = [
+ "lazy_static",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+]
+
+[[package]]
 name = "darling"
 version = "0.20.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2718,17 +2729,6 @@ dependencies = [
  "webview2-com",
  "windows 0.39.0",
  "wry",
-]
-
-[[package]]
-name = "tauri-tailwind"
-version = "0.0.0"
-dependencies = [
- "lazy_static",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
 ]
 
 [[package]]

@@ -3,12 +3,16 @@
 @tailwind utilities;
 
 html, body, #root, .App {
-    @apply font-sans;
-    @apply h-full w-full;
-    @apply !overflow-hidden;
+    @apply font-sans bg-primary h-full w-full !overflow-hidden;
 }
 
-p, h1 {
+@layer components {
+    .transition-colors-fast {
+        @apply transition-colors duration-75;
+    }
+}
+
+p, h1, img {
     @apply select-none;
 }
 

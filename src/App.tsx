@@ -5,7 +5,7 @@ import { useAppState } from "./state/appState";
 import SideBar from "./components/Sidebar";
 import Header from "./components/Header";
 import Home from "./components/Home";
-import MarkdownEditor from "./components/Editor/Markdown";
+import MarkdownEditor from "./components/Markdown";
 
 const App: React.FC = () => {
     const openedFile = useAppState((state) => state.openedFile);
@@ -26,7 +26,7 @@ const App: React.FC = () => {
                 <Header />
 
                 <Split
-                    className="split h-full w-full bg-primary"
+                    className="split h-full w-full"
                     gutterSize={0}
                     sizes={[30, 70]}
                 >

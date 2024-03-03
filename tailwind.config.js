@@ -9,7 +9,10 @@ export default {
         "header": "#393a42",
         "border": "#414248",
         "node": "#454757",
+        "logo": "#5467ce",
+        "logo1": "#3c4992"
       },
+      
     },
   },
   plugins: [require("@tailwindcss/typography")],
