@@ -12,7 +12,7 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
     const openedFile = useAppState((state) => state.openedFile);
     const setOpenedFile = useAppState((state) => state.setOpenedFile);
 
-    const className = cn("w-full h-6 flex shrink-0 p-4 items-center justify-start rounded-lg gap-2", openedFile === filePath ? "bg-node" : "bg-transparent hover:bg-node hover:bg-opacity-50");
+    const className = cn("w-full h-6 flex shrink-0 pl-12 pr-4 py-4 items-center justify-start rounded-md gap-2", openedFile === filePath ? "bg-node" : "bg-transparent hover:bg-node hover:bg-opacity-50");
 
     const selectFile = () => {
         setOpenedFile(filePath);

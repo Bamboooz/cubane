@@ -1,24 +1,52 @@
 import React from "react";
-import { appWindow } from "@tauri-apps/api/window";
 
 import { useAppState } from "../../state/appState";
 import { createFile, getFile } from "../../utils/fs";
 import icon from "../../assets/icon.png";
 
+interface HomeCommandButtonProps {
+    name: string;
+    trigger: string;
+    onClick: () => void;
+}
+
+const HomeCommandButton: React.FC<HomeCommandButtonProps> = ({ name, trigger, onClick }) => {
+    return (
+        <>
+            <button onClick={onClick} className="flex items-center justify-center gap-2 text-neutral-500 text-[16px] hover:text-neutral-400 hover:active:text-neutral-300">
+                <p>{name}</p>
+            
+                <div className="flex items-center justify-center gap-1">
+                    <div className="bg-node rounded-md mt-1 px-1 text-[12px] flex items-center justify-center">
+                        <p>Ctrl</p>
+                    </div>
+
+                    <p>+</p>
+
+                    <div className="bg-node rounded-md mt-1 px-1 text-[12px] flex items-center justify-center">
+                        <p>{trigger}</p>
+                    </div>
+                </div>
+            </button>
+        </>
+    );
+};
+
 const Home: React.FC = () => {
     const files = useAppState((state) => state.files);
     const updateFileList = useAppState((state) => state.updateFileList);
 
-    const newFile = () => {
+    const newFile = (extension: string) => {
         // find the next free Untiled {number} file name for creation
         const nextFreeUntiledNumber = files.map(obj => getFile(obj.path).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
+        const fileName = `Untiled ${nextFreeUntiledNumber}.${extension}`;
 
-        createFile(`Untiled ${nextFreeUntiledNumber}.md`)
+        createFile(fileName)
             .then((_) => {
                 updateFileList();
             })
             .catch((err) => {
-                console.error(`Failed to create file: Untiled ${nextFreeUntiledNumber}.md, error: ${err}.`); 
+                console.error(`Failed to create file: ${fileName}, error: ${err}.`); 
             })
     };
 
@@ -31,8 +59,9 @@ const Home: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-1">
-                    <p onClick={newFile} className="text-slate-400 text-[16px] cursor-pointer underline-offset-2 hover:underline hover:active:text-slate-300">Create new file (Ctrl + N)</p>
-                    <p onClick={() => appWindow.close()} className="text-slate-400 text-[16px] cursor-pointer underline-offset-2 hover:text-red-500 hover:underline hover:active:text-red-400">Close</p>
+                    <HomeCommandButton name="New note" trigger="N" onClick={() => newFile("md")} />
+                    <HomeCommandButton name="New schedule" trigger="H" onClick={() => newFile("schedule")} />
+                    <HomeCommandButton name="New kanban board" trigger="K" onClick={() => newFile("kanban")} />
                 </div>
             </div>
         </>

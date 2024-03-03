@@ -1,9 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAutosave } from "react-autosave";
+import {
+    MDXEditor,
+    headingsPlugin,
+    UndoRedo,
+    BoldItalicUnderlineToggles,
+    ListsToggle,
+    CodeToggle,
+    BlockTypeSelect,
+    toolbarPlugin,
+    listsPlugin,
+    markdownShortcutPlugin,
+    quotePlugin,
+    thematicBreakPlugin,
+    MDXEditorMethods
+} from "@mdxeditor/editor";
+import "@mdxeditor/editor/style.css";
 
 import { writeFile, readFile } from "../../utils/fs";
-import MarkdownPicker from "./toolbar";
 import MarkdownCounter from "./counter";
+import "./toolbar.css";
 
 interface MarkdownEditorProps {
     openedFile: string;
@@ -11,6 +27,7 @@ interface MarkdownEditorProps {
 
 const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
     const [text, setText] = useState<string>("");
+    const editorRef = useRef<MDXEditorMethods>(null);
 
     const updateFileContents = () => {
         readFile(openedFile)
@@ -21,40 +38,57 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
                 console.error(error);
             });
     };
-    
-    useEffect(() => {
-        updateFileContents();
-    }, [openedFile]);
-    
+
     const updateFile = () => {
         writeFile(openedFile, text)
             .catch((err) => {
                 console.error(`Failed to write to a file: ${err}.`);
             });
     };
+    
+    useEffect(() => {
+        updateFileContents();
+    }, [openedFile]);
 
-    // add text appending for markdown function picker
-    const appendText = (textToAppend: string) => {
-        setText((prevText) => {
-            return prevText + textToAppend;
-        })
-    };
+    useEffect(() => {
+        editorRef.current?.setMarkdown(text);
+    }, [text]);
 
-    useAutosave({ data: text, onSave: updateFile });
-
+    useAutosave({ data: text, onSave: updateFile, interval: 1000 });
+    
     return (
         <>
-            <div className="w-full h-full relative">
-                <div className="w-full h-12 p-2">
-                    <MarkdownPicker appendText={appendText} />
-                </div>
-
+            <div className="w-full h-full relative p-2 overflow-hidden">
                 {/* FIXME: file contents reset when moving from editor to Home page */}
-                <textarea
-                    onChange={(e) => setText(e.target.value)}
-                    spellCheck={false}
-                    value={text}
-                    className="bg-transparent resize-none p-4 outline-none w-full h-full text-[14px] text-neutral-300"
+
+                <MDXEditor
+                    ref={editorRef}
+                    markdown={text}
+                    onChange={setText}
+                    contentEditableClassName="text-neutral-300"
+                    plugins={
+                        [
+                            headingsPlugin(),
+                            listsPlugin(),
+                            markdownShortcutPlugin(),
+                            quotePlugin(),
+                            thematicBreakPlugin(),
+                            toolbarPlugin({
+                                toolbarContents: () => (
+                                    <>
+                                        {" "}
+                                        <UndoRedo />
+                                        <BoldItalicUnderlineToggles />
+                                        <CodeToggle />
+                                        {" "}
+                                        <ListsToggle />
+                                        {""}
+                                        <BlockTypeSelect />
+                                    </>
+                                )
+                            })
+                        ]
+                    }
                 />
 
                 <MarkdownCounter text={text} />

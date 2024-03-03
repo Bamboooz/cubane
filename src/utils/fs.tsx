@@ -1,5 +1,7 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { BsFileEarmarkText, BsMarkdown } from "react-icons/bs";
+import { BsMarkdown } from "react-icons/bs";
+import { LuCalendarDays, LuFile } from "react-icons/lu";
+import { MdOutlineViewKanban } from "react-icons/md";
 
 type FileList = Array<{ path: string; }>;
 
@@ -28,8 +30,14 @@ const getFileIcon = (filePath: string) => {
         case "md": {
             return <BsMarkdown />
         }
+        case "schedule": {
+            return <LuCalendarDays />
+        }
+        case "kanban": {
+            return <MdOutlineViewKanban />
+        }
         default: {
-            return <BsFileEarmarkText />
+            return <LuFile />
         }
     }
 };

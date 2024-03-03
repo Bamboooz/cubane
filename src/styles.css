@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root, .App {
+html, body, #root {
     @apply font-sans bg-primary h-full w-full !overflow-hidden;
 }
 

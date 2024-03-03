@@ -1,0 +1,3 @@
+div[role=toolbar] {
+    @apply !w-full !h-12 bg-sidebar rounded-sm border-solid border-[1px] border-border;
+}
