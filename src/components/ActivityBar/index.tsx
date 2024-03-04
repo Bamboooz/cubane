@@ -1,7 +1,7 @@
 import React from "react";
 import { WebviewWindow } from "@tauri-apps/api/window";
 import { MdOutlineViewKanban } from "react-icons/md";
-import { LuFileEdit, LuTrash2, LuRefreshCcw, LuHelpCircle, LuSettings, LuCalendarDays } from "react-icons/lu";
+import { LuFileEdit, LuTrash2, LuRefreshCcw, LuHelpCircle, LuSettings, LuCalendarDays, LuLightbulb } from "react-icons/lu";
 
 import { createFile, deleteFile, getFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
@@ -55,9 +55,9 @@ const ActivityBar: React.FC = () => {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-between bg-sidebar h-full py-2 w-10 border-solid border-b-[1px] border-r-[1px] border-border">
+            <div className="flex flex-col items-center justify-between bg-sidebar h-full py-3 w-10 border-solid border-b-[1px] border-r-[1px] border-border">
                 <div className="flex flex-col items-center justify-center gap-6">
-                    <div className="flex flex-col items-center justify-center gap-2">
+                    <div className="flex flex-col items-center justify-center gap-2 mt-[2px]">
                         <button onClick={() => newFile("md")} title="New note" className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors-fast hover:bg-zinc-700">
                             <LuFileEdit className="text-neutral-300 text-[18px]" />
                         </button>
@@ -68,6 +68,10 @@ const ActivityBar: React.FC = () => {
 
                         <button onClick={() => newFile("kanban")} title="New kanban board" className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors-fast hover:bg-zinc-700">
                             <MdOutlineViewKanban className="text-neutral-300 text-[18px]" />
+                        </button>
+
+                        <button onClick={() => newFile("memo")} title="New memory" className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors-fast hover:bg-zinc-700">
+                            <LuLightbulb className="text-neutral-300 text-[18px]" />
                         </button>
                     </div>
 

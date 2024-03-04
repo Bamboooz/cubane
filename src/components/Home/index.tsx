@@ -62,6 +62,7 @@ const Home: React.FC = () => {
                     <HomeCommandButton name="New note" trigger="N" onClick={() => newFile("md")} />
                     <HomeCommandButton name="New schedule" trigger="H" onClick={() => newFile("schedule")} />
                     <HomeCommandButton name="New kanban board" trigger="K" onClick={() => newFile("kanban")} />
+                    <HomeCommandButton name="New memory" trigger="M" onClick={() => newFile("memo")} />
                 </div>
             </div>
         </>

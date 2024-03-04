@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import { BsMarkdown } from "react-icons/bs";
-import { LuCalendarDays, LuFile } from "react-icons/lu";
+import { LuCalendarDays, LuFile, LuLightbulb } from "react-icons/lu";
 import { MdOutlineViewKanban } from "react-icons/md";
 
 type FileList = Array<{ path: string; }>;
@@ -15,7 +15,7 @@ async function getFileList(): Promise<FileList> {
     }
 }
 
-const createFile = (fileName: string) => invoke("create_file", { fileName: fileName });
+const createFile = (fileName: string, initialContent: string = "") => invoke("create_file", { fileName: fileName, initialContent: initialContent });
 const deleteFile = (filePath: string) => invoke("delete_file", { filePath: filePath });
 const readFile = (filePath: string) => invoke("read_file", { filePath: filePath });
 const writeFile = (filePath: string, content: string) => invoke("write_file", { filePath: filePath, content: content });
@@ -35,6 +35,9 @@ const getFileIcon = (filePath: string) => {
         }
         case "kanban": {
             return <MdOutlineViewKanban />
+        }
+        case "memo": {
+            return <LuLightbulb />
         }
         default: {
             return <LuFile />

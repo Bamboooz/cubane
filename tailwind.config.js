@@ -9,6 +9,8 @@ export default {
                 "header": "#393a42",
                 "border": "#414248",
                 "node": "#454757",
+                "accent": "#3e4c98",
+                "accent-2": "#5365cb",
             },
         },
     },

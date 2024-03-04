@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import MarkdownEditor from "./components/Markdown";
 import { getFile } from "./utils/fs";
 import ActivityBar from "./components/ActivityBar";
+import Memories from "./components/Memories";
 
 const App: React.FC = () => {
     const openedFile = useAppState((state) => state.openedFile);
@@ -21,6 +22,8 @@ const App: React.FC = () => {
             return <></>
         } else if (getFile(file).extension == "kanban") {
             return <></>
+        } else if (getFile(file).extension == "memo") {
+            return <Memories />
         }
 
         return <></>

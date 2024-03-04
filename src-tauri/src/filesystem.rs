@@ -36,11 +36,19 @@ pub fn verify_cubane_dir() -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn create_file(file_name: &str) -> Result<(), String> {
+pub fn create_file(file_name: &str, initial_content: &str) -> Result<(), String> {
     verify_cubane_dir().map_err(|err| format!("{}", err))?;
     
-    match fs::File::create(cubane_path().join(file_name)) {
-        Ok(_) => Ok(()),
+    let file_path = cubane_path().join(file_name);
+
+    match fs::File::create(&file_path) {
+        Ok(_) => {
+            if !initial_content.is_empty() {
+                write_file(file_path.display().to_string().as_str(), initial_content)?;
+            }
+
+            Ok(())
+        }
         Err(err) => Err(format!("Failed to create a file: {}.", err)),
     }
 }
@@ -85,5 +93,13 @@ pub fn write_file(file_path: &str, content: &str) -> Result<(), String> {
     match fs::write(file_path, content) {
         Ok(_) => Ok(()),
         Err(err) => Err(format!("Failed to write to a file: {}.", err)),
+    }
+}
+
+#[tauri::command]
+pub fn rename_file(file_path: &str, new_name: &str) -> Result<(), String> {
+    match fs::rename(file_path, new_name) {
+        Ok(_) => Ok(()),
+        Err(err) => Err(format!("Failed to rename a file: {} to {}.", err, new_name)),
     }
 }
