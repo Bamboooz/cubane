@@ -15,7 +15,7 @@ const App: React.FC = () => {
                 <div className="flex items-center justify-center w-full h-full">
                     <ActivityBar />
 
-                    {/* FIXME: split bar randomly resizing when switching between windows */}
+                    {/* FIXME: split bar randomly resizing when switching between windows*/}
                     <Split
                         className="split h-full w-full"
                         gutterSize={0}

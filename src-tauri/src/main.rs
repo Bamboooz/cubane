@@ -3,6 +3,7 @@
 
 mod filesystem;
 mod explorer;
+mod splash;
 
 fn preload() {
     match filesystem::verify_cubane_dir() {
@@ -27,6 +28,7 @@ fn main() {
             filesystem::write_file,
             filesystem::rename_file,
             explorer::open_in_explorer,
+            splash::close_splashscreen,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

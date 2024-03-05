@@ -2,32 +2,20 @@ import React from "react";
 import { appWindow } from "@tauri-apps/api/window";
 import { VscChromeMinimize, VscChromeMaximize, VscChromeClose } from "react-icons/vsc";
 
-import { getFile } from "../../utils/fs";
-import { useAppState } from "../../state/appState";
-
 import icon from "../../assets/icon_nobg.png";
 
-const Header: React.FC = () => {
-    const openedFile = useAppState((state) => state.openedFile);
-    const setOpenedFile = useAppState((state) => state.setOpenedFile);
-
-    const getName = () => {
-        const fileName = getFile(openedFile).name;
-
-        return getFile(openedFile).extension !== "memo" ? (fileName !== "" ? fileName : "Home") : "Memories";
-    };
-
+const SplashHeader: React.FC = () => {
     return (
         <>
             <header data-tauri-drag-region className="relative shrink-0 w-full z-40 pl-2 shadow-sm flex items-center justify-between h-10 bg-header border-solid border-b-[1px] border-r-[1px] border-border">
                 <div className="flex items-center justify-center">
-                    <button onClick={() => setOpenedFile("")} title="Home" className="flex items-center justify-center z-20">
+                    <div className="flex items-center justify-center z-20">
                         <img src={icon} className="w-6 h-6 rounded-sm" alt="logo" />
-                    </button>
+                    </div>
                 </div>
 
                 <div data-tauri-drag-region className="absolute w-full flex items-center justify-center">
-                    <p data-tauri-drag-region className="text-neutral-300 text-[12px]">{getName()}</p>
+                    <p data-tauri-drag-region className="text-neutral-300 text-[12px]">Loading...</p>
                 </div>
 
                 <div className="flex h-full z-20">
@@ -48,4 +36,4 @@ const Header: React.FC = () => {
     );
 };
 
-export default Header;
+export default SplashHeader;
