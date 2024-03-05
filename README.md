@@ -6,12 +6,21 @@
     <h1>cubane</h1>
 </div>
 
+cubane is a free, open-source nore taking, thought visualisation and time planning app. It has many features like markdown support, quick notes, multihour schedules with reminders, and productivity tools like kanban boards.
+
 > [!IMPORTANT]
 > cubane is still in development and not ready for day-to-day use yet.
 
 ## Features
 
+- Markdown supported notes
+- Schedules with notifications and reminders
+- Productivity tools such as kanban boards
+- Short memories storage
+
 ## Download
+
+Download not available yet, product still in development.
 
 ## Support me
 You can buy me a coffee if you enjoy my work [Buy me a Ko-fi ☕](https://ko-fi.com/Bamboooz#paypalModal)
