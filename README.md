@@ -6,9 +6,15 @@
     <h1>cubane</h1>
 </div>
 
+<br />
+
 cubane is a free, open-source nore taking, thought visualisation and time planning app for Windows. It has many features ranging from markdown supported notes to short memories storage, schedules creator with reminders, and productivity tools like kanban boards.
 
+<br />
+
 <img alt="project preview" src="https://github.com/Bamboooz/cubane/blob/main/src/assets/preview.png?raw=true" />
+
+<br />
 
 > [!IMPORTANT]
 > cubane is still in development and not ready for day-to-day use yet.
