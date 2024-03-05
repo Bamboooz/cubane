@@ -1,7 +1,7 @@
 import React from "react";
 import { WebviewWindow } from "@tauri-apps/api/window";
 import { MdOutlineViewKanban } from "react-icons/md";
-import { LuFileEdit, LuTrash2, LuRefreshCcw, LuHelpCircle, LuSettings, LuCalendarDays, LuLightbulb } from "react-icons/lu";
+import { LuFileEdit, LuTrash2, LuRefreshCcw, LuHelpCircle, LuSettings, LuCalendarDays, LuLightbulb, LuTerminal, LuArrowDownAZ } from "react-icons/lu";
 
 import { createFile, deleteFile, getFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
@@ -76,6 +76,14 @@ const ActivityBar: React.FC = () => {
                     </div>
 
                     <div className="flex flex-col items-center justify-center gap-2">
+                        <button title="Change sorting" className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors-fast hover:bg-zinc-700">
+                            <LuArrowDownAZ className="text-neutral-300 text-[18px]" />
+                        </button>
+        
+                        <button title="Open command palette" className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors-fast hover:bg-zinc-700">
+                            <LuTerminal className="text-neutral-300 text-[18px]" />
+                        </button>
+
                         <button onClick={removeFile} title="Delete file" className="bg-transparent flex items-center justify-center p-1 rounded-lg transition-colors-fast hover:bg-zinc-700">
                             <LuTrash2 className="text-neutral-300 text-[18px]" />
                         </button>

@@ -1,4 +1,5 @@
 import React from "react";
+import { LuCommand } from "react-icons/lu";
 
 import { useAppState } from "../../state/appState";
 import { createFile, getFile } from "../../utils/fs";
@@ -17,13 +18,13 @@ const HomeCommandButton: React.FC<HomeCommandButtonProps> = ({ name, trigger, on
                 <p>{name}</p>
             
                 <div className="flex items-center justify-center gap-1">
-                    <div className="bg-node rounded-md mt-1 px-1 text-[12px] flex items-center justify-center">
-                        <p>Ctrl</p>
+                    <div className="bg-node rounded-md mt-1 h-[20px] w-[20px] text-[12px] flex items-center justify-center">
+                        <LuCommand />
                     </div>
 
                     <p>+</p>
 
-                    <div className="bg-node rounded-md mt-1 px-1 text-[12px] flex items-center justify-center">
+                    <div className="bg-node rounded-md mt-1 h-[20px] w-[20px] text-[12px] flex items-center justify-center">
                         <p>{trigger}</p>
                     </div>
                 </div>

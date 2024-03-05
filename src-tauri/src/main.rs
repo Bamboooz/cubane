@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod filesystem;
+mod explorer;
 
 fn preload() {
     match filesystem::verify_cubane_dir() {
@@ -25,6 +26,7 @@ fn main() {
             filesystem::read_file,
             filesystem::write_file,
             filesystem::rename_file,
+            explorer::open_in_explorer,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

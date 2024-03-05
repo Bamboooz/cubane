@@ -6,6 +6,7 @@ import FileNode from "../File";
 import { useAppState } from "../../state/appState";
 import { getFile } from "../../utils/fs";
 import { cn } from "../../utils/tw";
+import { invoke } from "@tauri-apps/api/tauri";
 
 interface FileNodeListProps {
     name: string;
@@ -47,15 +48,17 @@ const SideBar: React.FC = () => {
         updateFileList();
     }, []);
 
+    async function openFolderInExplorer() {
+        await invoke("open_in_explorer", { filePath: "C://Users//Bambu//AppData//Roaming//cubane" });
+    };
+
     return (
         <>
-            <div className="h-full flex flex-col items-start justify-start w-[230px] bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border pt-2 gap-2">
-                <div className="text-neutral-300 flex items-center justify-center ml-6 my-2 gap-2">
+            <div className="h-full flex flex-col items-start justify-start bg-sidebar border-solid border-b-[1px] border-r-[1px] border-border gap-2">
+                <button onClick={openFolderInExplorer} className="w-full text-neutral-300 flex items-center justify-start pl-6 py-4 gap-2 border-solid border-b-[1px] border-border">
                     <LuFolder className="text-[16px] mt-[1px]" />
                     <p className="text-neutral-300 text-[14px] font-semibold">cubane</p>
-                </div>
-
-                <div className="w-full h-[1px] bg-border" />
+                </button>
 
                 <div className="w-full h-full flex flex-col items-center justify-start overflow-auto px-2">
                     <FileNodeList name="Notes" targetExtension="md" />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LuMoreVertical, LuLightbulb } from "react-icons/lu";
 
 import { readFile } from "../../utils/fs";
+import { useAppState } from "../../state/appState";
 import MemoryContext from "./context";
 
 interface MemoryProps {
@@ -15,6 +16,7 @@ const initialContextMenu = {
 }
 
 const Memory: React.FC<MemoryProps> = ({ filePath }) => {
+    const updateFileList = useAppState((state) => state.updateFileList);
     const [contextMenu, setContextMenu] = useState(initialContextMenu);
     const [text, setText] = useState<string>("");
 
@@ -22,6 +24,7 @@ const Memory: React.FC<MemoryProps> = ({ filePath }) => {
         readFile(filePath)
             .then((value) => {
                 setText(value as string);
+                updateFileList();
             })
             .catch((error) => {
                 console.error(error);
