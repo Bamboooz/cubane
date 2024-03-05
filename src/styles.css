@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html, body, #root {
-    @apply font-sans bg-primary h-full w-full !overflow-hidden;
+    @apply font-sans bg-primary h-screen w-screen !overflow-hidden;
 }
 
 @layer components {

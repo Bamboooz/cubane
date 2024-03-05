@@ -15,7 +15,7 @@ const MarkdownCounter: React.FC<MarkdownCounterProps> = ({ text }) => {
 
     return (
         <>
-            <div className="absolute flex items-center z-50 justify-center px-2 gap-2 bg-sidebar border-solid border-l-[1px] border-t-[1px] border-border right-0 bottom-0 h-6 rounded-tl-lg">
+            <div className="absolute flex items-center z-20 justify-center px-2 gap-2 bg-sidebar border-solid border-l-[1px] border-t-[1px] border-border right-0 bottom-0 h-6 rounded-tl-lg">
                 <LuPencil className="text-neutral-400 text-[14px]" />
 
                 <p className="text-neutral-400 text-[12px]">{`${words} words`}</p>

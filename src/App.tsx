@@ -9,7 +9,7 @@ import Page from "./components/Page";
 const App: React.FC = () => {
     return (
         <>
-            <div className="flex flex-col w-full h-full border-solid border-l-[1px] border-t-[1px] border-border">
+            <div className="flex flex-col w-screen h-screen border-solid border-l-[1px] border-t-[1px] border-border">
                 <Header />
 
                 <div className="flex items-center justify-center w-full h-full">

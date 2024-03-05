@@ -17,7 +17,7 @@ const Context: React.FC<ContextProps> = ({ x, y, closeContextMenu, className, ch
 
     return (
         <>
-            <div ref={contextMenuRef} className={cn("fixed z-50", className)} style={{ top: `${y}px`, left: `${x}px` }}>
+            <div ref={contextMenuRef} className={cn("fixed z-30", className)} style={{ top: `${y}px`, left: `${x}px` }}>
                 {children}
             </div>
         </>

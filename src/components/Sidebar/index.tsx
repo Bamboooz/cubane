@@ -7,6 +7,7 @@ import { useAppState } from "../../state/appState";
 import { getFile } from "../../utils/fs";
 import { cn } from "../../utils/tw";
 import { invoke } from "@tauri-apps/api/tauri";
+import { SortType, sortListAZ, sortListZA } from "../../utils/sort";
 
 interface FileNodeListProps {
     name: string;
@@ -16,7 +17,11 @@ interface FileNodeListProps {
 const FileNodeList: React.FC<FileNodeListProps> = ({ name, targetExtension }) => {
     const [nodeListOpened, setNodeListOpened] = useState<boolean>(true);
     const files = useAppState((state) => state.files);
+    const sideBarSort = useAppState((state) => state.sideBarSort);
     const targetFiles = files.filter((file) => getFile(file.path).extension === targetExtension);
+    const sortedTargetFiles = sideBarSort === SortType.AZ
+        ? sortListAZ(targetFiles)
+        : sortListZA(targetFiles);
 
     return (
         <>
@@ -31,7 +36,7 @@ const FileNodeList: React.FC<FileNodeListProps> = ({ name, targetExtension }) =>
                 </button>
 
                 <div className={cn("w-full transition-all overflow-hidden ease-in-out duration-800", nodeListOpened ? "max-h-screen mb-4" : "max-h-0 mb-0")}>
-                    {targetFiles.map((file, index) => (
+                    {sortedTargetFiles.map((file, index) => (
                         <FileNode key={index} filePath={file.path} />
                     ))}
                 </div>

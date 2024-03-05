@@ -12,7 +12,13 @@ export default {
                 "accent": "#3e4c98",
                 "accent-2": "#5365cb",
             },
+            flexGrow: {
+                3: "3",
+                7: "7",
+            }
         },
     },
-    plugins: [require("@tailwindcss/typography")],
+    plugins: [
+        require("@tailwindcss/typography")
+    ],
 };
