@@ -1,12 +1,14 @@
 <div align="center">
-    <img alt="os.py logo" width="100" src="https://github.com/Bamboooz/cubane/blob/main/src/assets/icon.png?raw=true" />
+    <img alt="cubane logo" width="100" src="https://github.com/Bamboooz/cubane/blob/main/src/assets/icon.png?raw=true" />
 </div>
 
 <div align="center">
     <h1>cubane</h1>
 </div>
 
-cubane is a free, open-source nore taking, thought visualisation and time planning app. It has many features like markdown support, quick notes, multihour schedules with reminders, and productivity tools like kanban boards.
+cubane is a free, open-source nore taking, thought visualisation and time planning app for Windows. It has many features ranging from markdown supported notes to short memories storage, schedules creator with reminders, and productivity tools like kanban boards.
+
+<img alt="project preview" src="https://github.com/Bamboooz/cubane/blob/main/src/assets/preview.png?raw=true" />
 
 > [!IMPORTANT]
 > cubane is still in development and not ready for day-to-day use yet.
