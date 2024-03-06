@@ -1,7 +1,7 @@
 import React from "react";
 
 import logo from "../../assets/icon_nobg.png";
-import SplashHeader from "./header";
+import SplashHeader from "./SplashHeader";
 
 const SplashScreen: React.FC = () => {
     return (

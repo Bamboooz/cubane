@@ -6,6 +6,7 @@ import { createFile, deleteFile, getFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
 import { SortType } from "../../utils/sort";
 import { SettingsMenu } from "../Settings";
+import ActivityBarButton from "./ActivityBarButton";
 
 const ActivityBar: React.FC = () => {
     const [settingsOpenModal, setSettingsOpenModal] = useState(false);
@@ -46,56 +47,29 @@ const ActivityBar: React.FC = () => {
     return (
         <>
             <div className="flex flex-col items-center justify-between bg-sidebar h-full py-3 w-10 border-solid border-b-[1px] border-r-[1px] border-border">
-                <div className="flex flex-col items-center justify-center gap-6">
-                    <div className="flex flex-col items-center justify-center gap-2 mt-[2px]">
-                        <button onClick={() => newFile("md")} title="New note" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                            <LuFileEdit className="text-neutral-300 text-[18px]" />
-                        </button>
-
-                        <button onClick={() => newFile("schedule")} title="New schedule" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                            <LuCalendarDays className="text-neutral-300 text-[18px]" />
-                        </button>
-
-                        <button onClick={() => newFile("kanban")} title="New kanban board" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                            <MdOutlineViewKanban className="text-neutral-300 text-[18px]" />
-                        </button>
-
-                        <button onClick={() => newFile("memo")} title="New memory" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                            <LuLightbulb className="text-neutral-300 text-[18px]" />
-                        </button>
+                <div className="flex flex-col items-center justify-center gap-6 mt-[2px]">
+                    <div className="flex flex-col items-center justify-center gap-2">
+                        <ActivityBarButton onClick={() => newFile("md")} title="New note" icon={<LuFileEdit />} />
+                        <ActivityBarButton onClick={() => newFile("schedule")} title="New schedule" icon={<LuCalendarDays />} />
+                        <ActivityBarButton onClick={() => newFile("kanban")} title="New kanban board" icon={<MdOutlineViewKanban />} />
+                        <ActivityBarButton onClick={() => setOpenedFile(".memo")} title="New memory" icon={<LuLightbulb />} />
                     </div>
 
                     <div className="flex flex-col items-center justify-center gap-2">
-                        {/* invert sort type */}
-                        <button onClick={() => setSideBarSort(sideBarSort === SortType.AZ ? SortType.ZA : SortType.AZ)} title="Change sorting" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                            {sideBarSort === SortType.AZ
-                                ? <LuArrowDownAZ className="text-neutral-300 text-[18px]" />
-                                : <LuArrowDownZA className="text-neutral-300 text-[18px]" />
-                            }
-                        </button>
-
-                        <button onClick={removeFile} title="Delete file" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                            <LuTrash2 className="text-neutral-300 text-[18px]" />
-                        </button>
-        
-                        <button onClick={updateFileList} title="Refresh files" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                            <LuRefreshCcw className="text-neutral-300 text-[18px]" />
-                        </button>
+                        <ActivityBarButton
+                            onClick={() => setSideBarSort(sideBarSort ^ SortType.AZ ^ SortType.ZA)}
+                            title="Change sorting"
+                            icon={sideBarSort === SortType.AZ ? <LuArrowDownAZ /> : <LuArrowDownZA />}
+                        />
+                        <ActivityBarButton onClick={removeFile} title="Delete file" icon={<LuTrash2 />} />
+                        <ActivityBarButton onClick={updateFileList} title="Refresh files" icon={<LuRefreshCcw />} />
                     </div>
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-2">
-                    <button title="Open command palette" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                        <LuTerminal className="text-neutral-300 text-[18px]" />
-                    </button>
-                    
-                    <button title="Help" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                        <LuHelpCircle className="text-neutral-300 text-[18px]" />
-                    </button>
-
-                    <button onClick={() => setSettingsOpenModal(true)} title="Open settings" className="bg-transparent flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                        <LuSettings className="text-neutral-300 text-[18px]" />
-                    </button>
+                    <ActivityBarButton onClick={() => {}} title="Open command palette" icon={<LuTerminal />} />
+                    <ActivityBarButton onClick={() => {}} title="Help" icon={<LuHelpCircle />} />
+                    <ActivityBarButton onClick={() => setSettingsOpenModal(true)} title="Open settings" icon={<LuSettings />} />
                 </div>
 
                 <SettingsMenu openModal={settingsOpenModal} setOpenModal={setSettingsOpenModal} />

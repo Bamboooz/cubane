@@ -1,25 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAutosave } from "react-autosave";
-import {
-    MDXEditor,
-    headingsPlugin,
-    UndoRedo,
-    BoldItalicUnderlineToggles,
-    ListsToggle,
-    CodeToggle,
-    BlockTypeSelect,
-    toolbarPlugin,
-    listsPlugin,
-    markdownShortcutPlugin,
-    quotePlugin,
-    thematicBreakPlugin,
-    MDXEditorMethods
-} from "@mdxeditor/editor";
+import { MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 
 import { writeFile, readFile } from "../../utils/fs";
-import MarkdownCounter from "./counter";
-import "./toolbar.css";
+import MarkdownCounter from "./MarkdownCounter";
+import MarkdownEditorView from "./MarkdownEditorView";
 
 interface MarkdownEditorProps {
     openedFile: string;
@@ -59,38 +45,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
     return (
         <>
             <div className="w-full h-full relative p-2 overflow-hidden">
-                {/* FIXME: file contents reset when moving from editor to Home page */}
-
-                <MDXEditor
-                    ref={editorRef}
-                    markdown={text}
-                    onChange={setText}
-                    contentEditableClassName="text-neutral-300"
-                    plugins={
-                        [
-                            headingsPlugin(),
-                            listsPlugin(),
-                            markdownShortcutPlugin(),
-                            quotePlugin(),
-                            thematicBreakPlugin(),
-                            toolbarPlugin({
-                                toolbarContents: () => (
-                                    <>
-                                        {" "}
-                                        <UndoRedo />
-                                        <BoldItalicUnderlineToggles />
-                                        <CodeToggle />
-                                        {" "}
-                                        <ListsToggle />
-                                        {""}
-                                        <BlockTypeSelect />
-                                    </>
-                                )
-                            })
-                        ]
-                    }
-                />
-
+                <MarkdownEditorView editorRef={editorRef} text={text} setText={setText} />
                 <MarkdownCounter text={text} />
             </div>
         </>

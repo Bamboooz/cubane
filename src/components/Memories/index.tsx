@@ -3,7 +3,7 @@ import { LuSend, LuImage, LuLink } from "react-icons/lu";
 
 import { useAppState } from "../../state/appState";
 import { getFile, createFile } from "../../utils/fs";
-import Memory from "./memory";
+import Memory from "./Memory";
 
 const Memories: React.FC = () => {
     const [newNoteText, setNewNoteText] = useState<string>("");

@@ -3,7 +3,7 @@ import { LuMoreVertical, LuLightbulb } from "react-icons/lu";
 
 import { readFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
-import MemoryContext from "./context";
+import MemoryContext from "./MemoryContext";
 
 interface MemoryProps {
     filePath: string;

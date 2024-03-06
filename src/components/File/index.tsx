@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { cn } from "../../utils/tw";
 import { getFile, getFileIcon } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
-import FileContext from "./context";
+import FileContext from "./FileContext";
 
 interface FileNodeProps {
     filePath: string;
@@ -38,7 +38,7 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
     return (
         <>
             <button onContextMenu={(e) => handleContextMenu(e)} onClick={selectFile} className={className}>
-                {React.cloneElement(getFileIcon(filePath), { className: "text-neutral-300 text-[20px]" })}
+                {React.cloneElement(getFileIcon(filePath), { className: "text-neutral-300 text-[18px]" })}
                 <p className="text-[12px] text-neutral-300">{getFile(filePath).name}</p>
 
                 {contextMenu.show &&
