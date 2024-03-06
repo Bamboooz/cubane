@@ -5,6 +5,8 @@ use std::fs;
 use serde::Serialize;
 use lazy_static::lazy_static;
 
+use crate::date::format_duration;
+
 #[derive(Serialize)]
 pub struct FileEntry {
     path: String,
@@ -18,6 +20,7 @@ lazy_static! {
     };
 }
 
+#[tauri::command]
 pub fn cubane_path() -> PathBuf {
     Path::new(&*APPDATA).join("cubane")
 }
@@ -101,5 +104,29 @@ pub fn rename_file(file_path: &str, new_name: &str) -> Result<(), String> {
     match fs::rename(file_path, new_name) {
         Ok(_) => Ok(()),
         Err(err) => Err(format!("Failed to rename a file: {} to {}.", err, new_name)),
+    }
+}
+
+#[tauri::command]
+pub fn last_updated(file_path: &str, include_formatting: bool) -> Result<String, String> {
+    match fs::metadata(file_path) {
+        Ok(metadata) => {
+            if let Ok(modified_time) = metadata.modified() {
+                let duration = modified_time
+                    .elapsed()
+                    .map_err(|e| format!("Error getting elapsed time: {}", e))?;
+
+                let result = if include_formatting {
+                    format_duration(duration)
+                } else {
+                    format!("{}", duration.as_secs())
+                };
+
+                Ok(result)
+            } else {
+                Err("Unable to retrieve file creation date.".to_string())
+            }
+        }
+        Err(e) => Err(format!("Error getting file metadata: {}", e)),
     }
 }

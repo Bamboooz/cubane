@@ -1,4 +1,5 @@
 import React from "react";
+import { open } from "@tauri-apps/api/shell";
 
 const GeneralSettingsMenu: React.FC = () => {
     return (
@@ -12,7 +13,7 @@ const GeneralSettingsMenu: React.FC = () => {
                     <p className="text-neutral-300 text-[14px]">Current version: v0.0.1</p>
                     <p className="text-neutral-400 text-[13px]">Installer version: v0.0.1</p>
                     <p className="text-neutral-400 text-[13px]">cubane is up to date!</p>
-                    <a className="text-accent-2 text-[13px] underline underline-offset-2">Read the changelog.</a>
+                    <p onClick={() => open("https://github.com/Bamboooz/cubane/releases/latest")} className="text-accent-2 cursor-pointer text-[13px] hover:underline hover:underline-offset-2">Read the changelog.</p>
                 </div>
 
                 <div className="w-full h-[1px] bg-border" />

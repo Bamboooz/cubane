@@ -17,7 +17,7 @@ p, h1, img {
 }
 
 ::-webkit-scrollbar {
-    @apply w-2;
+    @apply w-2 h-2;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -26,18 +26,4 @@ p, h1, img {
 
 ::-webkit-scrollbar-track {
     @apply bg-transparent;
-}
-
-.split {
-    @apply flex flex-row;
-}
-
-.gutter {
-    background-color: #414248;
-    background-repeat: no-repeat;
-    background-position: 50%;
-}
-
-.gutter.gutter-horizontal {
-    cursor: col-resize;
 }

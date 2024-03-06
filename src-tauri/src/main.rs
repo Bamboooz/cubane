@@ -4,6 +4,7 @@
 mod filesystem;
 mod explorer;
 mod splash;
+mod date;
 
 fn preload() {
     match filesystem::verify_cubane_dir() {
@@ -27,6 +28,8 @@ fn main() {
             filesystem::read_file,
             filesystem::write_file,
             filesystem::rename_file,
+            filesystem::last_updated,
+            filesystem::cubane_path,
             explorer::open_in_explorer,
             splash::close_splashscreen,
         ])

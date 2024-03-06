@@ -4,6 +4,7 @@ import { LuMoreVertical, LuLightbulb } from "react-icons/lu";
 import { readFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
 import MemoryContext from "./MemoryContext";
+import { invoke } from "@tauri-apps/api/tauri";
 
 interface MemoryProps {
     filePath: string;
@@ -18,6 +19,7 @@ const initialContextMenu = {
 const Memory: React.FC<MemoryProps> = ({ filePath }) => {
     const updateFileList = useAppState((state) => state.updateFileList);
     const [contextMenu, setContextMenu] = useState(initialContextMenu);
+    const [modifiedDate, setModifiedDate] = useState<string>("");
     const [text, setText] = useState<string>("");
 
     useEffect(() => {
@@ -30,7 +32,6 @@ const Memory: React.FC<MemoryProps> = ({ filePath }) => {
                 console.error(error);
             });
     }, []);
-
     
     const handleContextMenu = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -41,13 +42,21 @@ const Memory: React.FC<MemoryProps> = ({ filePath }) => {
 
     const contextMenuClose = () => setContextMenu(initialContextMenu);
 
+    invoke("last_updated", { filePath: filePath, includeFormatting: true })
+        .then((date) => {
+            setModifiedDate(date as string);
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+
     return (
         <>
             <div className="flex w-full flex-col items-start justify-center break-words px-2 py-3 gap-2 bg-sidebar rounded-md border-solid border-[1px] border-border">
                 <div className="w-full flex items-center justify-between">
                     <div className="flex items-center justify-center ml-2 gap-1">
                         <LuLightbulb className="text-[12px] text-neutral-400" />
-                        <p className="text-[12px] text-neutral-400">4 minutes ago</p>
+                        <p className="text-[12px] text-neutral-400">{modifiedDate}</p>
                     </div>
                     
                     <button onClick={handleContextMenu} className="p-1 rounded-md transition-colors-fast hover:bg-header">

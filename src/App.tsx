@@ -1,5 +1,5 @@
 import React from "react";
-import Split from "react-split";
+import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 
 import SideBar from "./components/Sidebar";
 import Header from "./components/Header";
@@ -15,15 +15,15 @@ const App: React.FC = () => {
                 <div className="flex items-center justify-center w-full h-full">
                     <ActivityBar />
 
-                    {/* FIXME: split bar randomly resizing when switching between windows*/}
-                    <Split
-                        className="split h-full w-full"
-                        gutterSize={0}
-                        sizes={[30, 70]}
-                    >
-                        <SideBar />
-                        <Page />
-                    </Split>
+                    <PanelGroup direction="horizontal" className="h-full w-full">
+                        <Panel defaultSize={30} minSize={20}>
+                            <SideBar />
+                        </Panel>
+                        <PanelResizeHandle />
+                        <Panel defaultSize={70} minSize={30}>
+                            <Page />
+                        </Panel>
+                    </PanelGroup>
                 </div>
             </div>
         </>

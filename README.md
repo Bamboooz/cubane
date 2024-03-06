@@ -8,7 +8,7 @@
 
 <br />
 
-cubane is a free, open-source nore taking, thought visualisation and time planning app for Windows. It has many features ranging from markdown supported notes to short memories storage, schedules creator with reminders, and productivity tools like kanban boards.
+cubane is a free, open-source, cross-platform note taking, thought visualisation and time planning app. It has many features ranging from markdown supported notes to short memories storage, schedules creator with reminders, and productivity tools like kanban boards.
 
 <br />
 
