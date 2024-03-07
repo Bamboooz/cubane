@@ -12,11 +12,37 @@ pub struct FileEntry {
     path: String,
 }
 
+#[cfg(target_os = "windows")]
 lazy_static! {
     pub static ref APPDATA: String = {
         env::var("APPDATA").unwrap_or_else(|_| {
             panic!("Failed to retrieve APPDATA environment variable");
         })
+    };
+}
+
+#[cfg(target_os = "macos")]
+lazy_static! {
+    pub static ref APPDATA: String = {
+        // Get the home directory on macOS and append the required path components
+        let mut path = env::home_dir().unwrap_or_else(|| {
+            panic!("Failed to determine home directory");
+        });
+        path.push("Library");
+        path.push("Application Support");
+        path.to_string_lossy().to_string()
+    };
+}
+
+#[cfg(target_os = "linux")]
+lazy_static! {
+    pub static ref APPDATA: String = {
+        // Get the home directory on Linux and append the required path components
+        let mut path = env::var("HOME").unwrap_or_else(|_| {
+            panic!("Failed to retrieve HOME environment variable");
+        });
+        path.push_str("/.config"); // Adjust this based on your specific requirements
+        path.to_string()
     };
 }
 
