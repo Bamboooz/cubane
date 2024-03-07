@@ -44,7 +44,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
     
     return (
         <>
-            <div className="w-full h-full relative p-2 overflow-hidden">
+            <div className="w-full h-full relative p-4 gap-4 overflow-hidden">
                 <MarkdownEditorView editorRef={editorRef} text={text} setText={setText} />
                 <MarkdownCounter text={text} />
             </div>

@@ -42,7 +42,7 @@ const sortListLastUpdated = async (list: FileList): Promise<FileList> => {
     });
 
     const sortedList = await Promise.all(promises);
-    return sortedList.sort((a, b) => b.lastUpdated - a.lastUpdated).map(item => item.file);
+    return sortedList.sort((a, b) => a.lastUpdated - b.lastUpdated).map(item => item.file);
 };
 
 const sortListFirstUpdated = async (list: FileList): Promise<FileList> => {
@@ -52,7 +52,7 @@ const sortListFirstUpdated = async (list: FileList): Promise<FileList> => {
     });
 
     const sortedList = await Promise.all(promises);
-    return sortedList.sort((a, b) => a.firstUpdated - b.firstUpdated).map(item => item.file);
+    return sortedList.sort((a, b) => b.firstUpdated - a.firstUpdated).map(item => item.file);
 };
 
 export { SortType, sortListAZ, sortListZA, sortListLastUpdated, sortListFirstUpdated };

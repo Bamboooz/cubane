@@ -64,7 +64,7 @@ const MemoryContext: React.FC<MemoryContextProps> = ({ x, y, closeContextMenu, f
                     </button>
                 </div>
 
-                <div className="h-[1px] w-full bg-border my-1" />
+                <div className="h-[1px] w-full bg-border" />
 
                 <div className="flex flex-col items-center justify-center p-1">
                     <button onClick={removeFile} className="w-full h-8 flex items-center justify-start gap-2 px-4 rounded-md transition-colors-fast hover:bg-header">

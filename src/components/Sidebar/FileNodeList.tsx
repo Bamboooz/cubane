@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 import FileNode from "../File";
 import { useAppState } from "../../state/appState";
-import { SortType, sortListAZ, sortListZA } from "../../utils/sort";
+import { SortType, sortListAZ, sortListFirstUpdated, sortListLastUpdated, sortListZA } from "../../utils/sort";
 import { getFile } from "../../utils/fs";
 import { cn } from "../../utils/tw";
 
@@ -17,9 +17,26 @@ const FileNodeList: React.FC<FileNodeListProps> = ({ name, targetExtension }) =>
     const files = useAppState((state) => state.files);
     const sideBarSort = useAppState((state) => state.sideBarSort);
     const targetFiles = files.filter((file) => getFile(file.path).extension === targetExtension);
-    const sortedTargetFiles = sideBarSort === SortType.AZ
-        ? sortListAZ(targetFiles)
-        : sortListZA(targetFiles);
+    
+    const [sortedTargetFiles, setSortedTargetFiles] = useState<{path: string}[]>([]);
+
+    useEffect(() => {
+        const sortFiles = async () => {
+            if (sideBarSort === SortType.AZ) {
+                setSortedTargetFiles(sortListAZ(targetFiles));
+            } else if (sideBarSort === SortType.ZA) {
+                setSortedTargetFiles(sortListZA(targetFiles));
+            } else if (sideBarSort === SortType.LAST_UPDATED) {
+                const sorted = await sortListLastUpdated(targetFiles);
+                setSortedTargetFiles(sorted);
+            } else {
+                const sorted = await sortListFirstUpdated(targetFiles);
+                setSortedTargetFiles(sorted);
+            }
+        };
+    
+        sortFiles();
+    }, [sideBarSort, files]);    
 
     return (
         <>
