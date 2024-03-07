@@ -37,6 +37,8 @@ const Memories: React.FC = () => {
                     <div className="flex flex-col items-start justify-center w-full p-4 gap-4">
                         <textarea value={newNoteText} onChange={(e) => setNewNoteText(e.target.value)} placeholder="Any thoughts..." className="w-full resize-none bg-transparent outline-none text-neutral-300" />
 
+                        {/*
+                        FOR FUTURE USE
                         <div className="flex items-center justify-center gap-2">
                             <button className="flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-header">
                                 <LuImage className="text-neutral-400 text-[20px]" />
@@ -45,7 +47,7 @@ const Memories: React.FC = () => {
                             <button className="flex items-center justify-center p-1 rounded-md transition-colors-fast hover:bg-header">
                                 <LuLink className="text-neutral-400 text-[20px]" />
                             </button>
-                        </div>
+                        </div>*/}
                     </div>
 
                     <div className="w-full h-[1px] bg-border" />

@@ -8,10 +8,14 @@ import { SortType } from "../../utils/sort";
 import { SettingsMenu } from "../Settings";
 import ActivityBarButton from "./ActivityBarButton";
 import { HelpMenu } from "../Help";
+import { CommandPalette } from "../CommandPalette";
 
 const ActivityBar: React.FC = () => {
-    const [helpOpenModal, setHelpOpenModal] = useState<boolean>(false);
-    const [settingsOpenModal, setSettingsOpenModal] = useState<boolean>(false);
+    const [spinning, setSpinning] = useState<boolean>(false);
+    const [helpModalOpened, setHelpModalOpened] = useState<boolean>(false);
+    const [settingsModalOpened, setSettingsModalOpened] = useState<boolean>(false);
+    const [commandPaletteModalOpened, setCommandPaletteModalOpened] = useState<boolean>(false);
+
     const files = useAppState((state) => state.files);
     const updateFileList = useAppState((state) => state.updateFileList);
     const openedFile = useAppState((state) => state.openedFile);
@@ -46,6 +50,19 @@ const ActivityBar: React.FC = () => {
         }
     };
 
+    const formatTitle = () => {
+        switch (sideBarSort) {
+            case SortType.AZ:
+                return "Alphabetical sorting";
+            case SortType.ZA:
+                return "Reversed alphabetical sorting";
+            case SortType.LAST_UPDATED:
+                return "Sort by last updated";
+            case SortType.FIRST_UPDATED:
+                return "Sort by first updated";
+        }
+    };
+
     const nextFormat = () => {
         switch (sideBarSort) {
             case SortType.AZ:
@@ -72,6 +89,16 @@ const ActivityBar: React.FC = () => {
         }
     };
 
+    const refreshFileList = () => {
+        setSpinning(true);
+
+        updateFileList();
+
+        setTimeout(() => {
+            setSpinning(false);
+        }, 800);
+    };
+
     return (
         <>
             <div className="flex flex-col items-center justify-between bg-sidebar h-full py-3 w-10 border-solid border-b-[1px] border-r-[1px] border-border">
@@ -81,27 +108,24 @@ const ActivityBar: React.FC = () => {
                         <ActivityBarButton onClick={() => newFile("schedule")} title="New schedule" icon={<LuCalendarDays />} />
                         <ActivityBarButton onClick={() => newFile("kanban")} title="New kanban board" icon={<MdOutlineViewKanban />} />
                         <ActivityBarButton onClick={() => setOpenedFile(".memo")} title="New memory" icon={<LuLightbulb />} />
+                        <ActivityBarButton onClick={removeFile} title="Delete file" icon={<LuTrash2 className="group-hover:text-red-500" />} />
                     </div>
 
                     <div className="flex flex-col items-center justify-center gap-2">
-                        <ActivityBarButton
-                            onClick={() => setSideBarSort(nextFormat())}
-                            title="Change sorting"
-                            icon={formatIcon()}
-                        />
-                        <ActivityBarButton onClick={removeFile} title="Delete file" icon={<LuTrash2 />} />
-                        <ActivityBarButton onClick={updateFileList} title="Refresh files" icon={<LuRefreshCcw />} />
+                        <ActivityBarButton onClick={() => setSideBarSort(nextFormat())} title={formatTitle()} icon={formatIcon()} />
+                        <ActivityBarButton onClick={refreshFileList} title="Refresh files" icon={<LuRefreshCcw className={spinning ? "animate-spin-once" : ""} />} />
                     </div>
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-2">
-                    <ActivityBarButton onClick={() => {}} title="Open command palette" icon={<LuTerminal />} />
-                    <ActivityBarButton onClick={() => setHelpOpenModal(true)} title="Help" icon={<LuHelpCircle />} />
-                    <ActivityBarButton onClick={() => setSettingsOpenModal(true)} title="Open settings" icon={<LuSettings />} />
+                    <ActivityBarButton onClick={() => setCommandPaletteModalOpened(true)} title="Open command palette" icon={<LuTerminal />} />
+                    <ActivityBarButton onClick={() => setHelpModalOpened(true)} title="Help" icon={<LuHelpCircle />} />
+                    <ActivityBarButton onClick={() => setSettingsModalOpened(true)} title="Open settings" icon={<LuSettings />} />
                 </div>
 
-                <SettingsMenu openModal={settingsOpenModal} setOpenModal={setSettingsOpenModal} />
-                <HelpMenu openModal={helpOpenModal} setOpenModal={setHelpOpenModal} />
+                <SettingsMenu helpModalOpened={helpModalOpened} setHelpModalOpened={setHelpModalOpened} settingsModalOpened={settingsModalOpened} setSettingsModalOpened={setSettingsModalOpened} />
+                <HelpMenu helpModalOpened={helpModalOpened} setHelpModalOpened={setHelpModalOpened} />
+                <CommandPalette commandPaletteModalOpened={commandPaletteModalOpened} setCommandPaletteModalOpened={setCommandPaletteModalOpened} />
             </div> 
         </>
     );

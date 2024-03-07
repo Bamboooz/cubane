@@ -1,53 +1,46 @@
-import React, { useRef, useState } from "react";
-import { LuPlus } from "react-icons/lu";
+import React, { useState } from "react";
+import { LuSettings } from "react-icons/lu";
 
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
-import { cn } from "../../utils/tw";
 import GeneralSettingsMenu from "./GeneralSettingsMenu";
 import SettingsMenuButton from "./SettingsMenuButton";
+import Modal from "../common/Modal";
 
 interface SettingsMenuProps {
-    openModal: boolean;
-    setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+    helpModalOpened: boolean;
+    setHelpModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+    settingsModalOpened: boolean;
+    setSettingsModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SettingsMenu: React.FC<SettingsMenuProps> = ({ openModal, setOpenModal }) => {
+const SettingsMenu: React.FC<SettingsMenuProps> = ({ helpModalOpened, setHelpModalOpened, settingsModalOpened, setSettingsModalOpened }) => {
     const [pageSelected, setPageSelected] = useState<number>(0);
-    const settingsMenuRef = useRef<HTMLDivElement>(null);
-    useOnClickOutside(settingsMenuRef, () => setOpenModal(false));
 
     return (
         <>
-            <div className={cn("w-screen h-screen absolute top-0 left-0 z-40 bg-primary bg-opacity-50", openModal ? "flex items-center justify-center" : "hidden")}>
-                <div ref={settingsMenuRef} className="relative flex items-center justify-center bg-sidebar h-[80vh] w-[70vw] z-50 shadow-2xl rounded-md border-solid border-[1px] border-border">
-                    <button onClick={() => setOpenModal(false)} title="Close settings" className="absolute top-3 right-3 p-1 rounded-md transition-colors-fast hover:bg-zinc-700">
-                        <LuPlus className="text-neutral-300 rotate-45 text-2xl" />
-                    </button>
-
-                    <div className="h-full flex flex-col items-start p-3 gap-2 justify-start grow-3 border-solid border-r-[1px] border-border">
-                        <p className="text-neutral-500 font-semibold text-[13px] ml-3 mb-1">Options</p>
-
-                        <SettingsMenuButton name="General" pageId={0} pageSelected={pageSelected} setPageSelected={setPageSelected} />
-                        <SettingsMenuButton name="Editor" pageId={1} pageSelected={pageSelected} setPageSelected={setPageSelected} />
-                        <SettingsMenuButton name="Files and links" pageId={2} pageSelected={pageSelected} setPageSelected={setPageSelected} />
-                        <SettingsMenuButton name="Appearance" pageId={3} pageSelected={pageSelected} setPageSelected={setPageSelected} />
-                        <SettingsMenuButton name="Hotkeys" pageId={4} pageSelected={pageSelected} setPageSelected={setPageSelected} />
+            <Modal modalOpened={settingsModalOpened} setModalOpened={setSettingsModalOpened} className="flex items-center justify-center h-[80vh] w-[70vw]">
+                <div className="h-full flex flex-col items-start p-3 gap-2 justify-start w-[30%] border-solid border-r-[1px] border-border">
+                    <div className="flex items-center justify-center gap-2">
+                        <LuSettings className="text-neutral-500 text-[14px]" />
+                        <p className="text-neutral-500 font-semibold text-[13px] mb-[2px]">Options</p>
                     </div>
 
-                    <div className="h-full grow-7">
-                        {pageSelected === 0
-                            ? <GeneralSettingsMenu />
-                            : pageSelected === 1
-                            ? <GeneralSettingsMenu />
-                            : pageSelected === 2
-                            ? <GeneralSettingsMenu />
-                            : pageSelected === 3
-                            ? <GeneralSettingsMenu />
-                            : <GeneralSettingsMenu />
-                        }
-                    </div>
+                    <SettingsMenuButton name="General" pageId={0} pageSelected={pageSelected} setPageSelected={setPageSelected} />
+                    <SettingsMenuButton name="Editor" pageId={1} pageSelected={pageSelected} setPageSelected={setPageSelected} />
+                    <SettingsMenuButton name="Appearance" pageId={2} pageSelected={pageSelected} setPageSelected={setPageSelected} />
+                    <SettingsMenuButton name="Hotkeys" pageId={3} pageSelected={pageSelected} setPageSelected={setPageSelected} />
                 </div>
-            </div>
+
+                <div className="h-full w-[70%]">
+                    {pageSelected === 0
+                        ? <GeneralSettingsMenu helpModalOpened={helpModalOpened} setHelpModalOpened={setHelpModalOpened} setSettingsModalOpened={setSettingsModalOpened} />
+                        : pageSelected === 1
+                        ? <></>
+                        : pageSelected === 2
+                        ? <></>
+                        : <></>
+                    }
+                </div>
+            </Modal>
         </>
     );
 };

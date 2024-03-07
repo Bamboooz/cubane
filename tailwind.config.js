@@ -12,9 +12,11 @@ export default {
                 "accent": "#3e4c98",
                 "accent-2": "#5365cb",
             },
-            flexGrow: {
-                3: "3",
-                7: "7",
+            animation: {
+                "spin-once": "spin 0.8s linear forwards",
+            },
+            zIndex: {
+                "60": "60",
             }
         },
     },

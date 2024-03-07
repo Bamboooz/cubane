@@ -4,6 +4,11 @@ import { createStore } from "zustand/vanilla";
 import { getFileList, FileList } from "../utils/fs";
 import { SortType } from "../utils/sort";
 
+enum ProductState {
+    VERSION = "0.0.1",
+    INSTALLER_VERSION = "0.0.1",
+}
+
 interface AppState {
     openedFile: string;
     setOpenedFile: (filePath: string) => void;
@@ -37,4 +42,4 @@ function useAppState<T>(selector?: (state: AppState) => T) {
     return useStore(appStateStore, selector!);
 }
 
-export { useAppState };
+export { useAppState, ProductState };
