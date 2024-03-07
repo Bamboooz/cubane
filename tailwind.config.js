@@ -13,7 +13,14 @@ export default {
                 "accent-2": "#5365cb",
             },
             animation: {
-                "spin-once": "spin 0.8s linear forwards",
+                "spin-once": "reverse-spin 0.8s linear forwards",
+            },
+            keyframes: {
+                "reverse-spin": {
+                    from: {
+                        transform: "rotate(360deg)"
+                    },
+                }
             },
             zIndex: {
                 "60": "60",

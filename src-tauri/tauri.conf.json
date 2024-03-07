@@ -18,7 +18,7 @@
         "open": true
       },
       "fs": {
-        "all": true,
+        "all": false,
         "readFile": true,
         "writeFile": true,
         "readDir": true,
@@ -38,16 +38,10 @@
         "minimize": true,
         "unmaximize": true,
         "unminimize": true,
-        "startDragging": true,
-        "create": true
+        "startDragging": true
       },
-      "dialog": {
-        "all": true,
-        "ask": true,
-        "confirm": true,
-        "message": true,
-        "open": true,
-        "save": true
+      "globalShortcut": {
+        "all": true
       }
     },
     "bundle": {
