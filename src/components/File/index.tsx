@@ -58,11 +58,14 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
 
     const contextMenuClose = () => setContextMenu(initialContextMenu);
 
-    const renameFile = () => {
+    const renameFile = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
         invoke("rename_file", { filePath: filePath, newName: editingText })
             .then(() => {
                 updateFileList();
                 setEditing(false);
+                setEditingText(getFile(filePath).name);
             })
             .catch((err) => {
                 console.error(`Failed to rename file: ${filePath}, error: ${err}.`); 
@@ -74,8 +77,6 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
             inputEditorRef.current?.focus();
         }
     }, [editing]);
-
-    // FIXME: when renaming and file already exist should error not just replace that file
 
     return (
         <>
@@ -91,7 +92,7 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
                 </div>
                 : <div ref={fileNodeRef} className="w-full h-6 flex shrink-0 pl-12 pr-4 py-4 items-center justify-start rounded-md gap-2 bg-node bg-opacity-50 border-solid border-[1px] border-accent">
                     {React.cloneElement(fileIcon, { className: "text-neutral-300 text-[18px]" })}
-                    <form onSubmit={renameFile} className="flex items-center justify-center h-full">
+                    <form onSubmit={(e) => renameFile(e)} className="flex items-center justify-center h-full">
                         <input ref={inputEditorRef} onFocus={(e) => e.target.select()} type="text" value={editingText} onChange={(e) => setEditingText(e.target.value)} className="text-[12px] text-neutral-300 bg-transparent outline-none" />
                     </form>
 

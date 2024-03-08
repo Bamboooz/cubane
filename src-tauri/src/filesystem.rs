@@ -126,7 +126,11 @@ pub fn rename_file(file_path: &str, new_name: &str) -> Result<(), String> {
     let extension = path.extension().unwrap_or_default();
     let new_path = parent.join(format!("{}.{}", new_name, extension.to_string_lossy()));
 
-    match fs::rename(file_path, new_path) {
+    if new_path.exists() {
+        return Err(format!("Destination file already exists: {}", new_path.display()));
+    }
+
+    match fs::rename(file_path, &new_path) {
         Ok(_) => Ok(()),
         Err(err) => Err(format!("Failed to rename a file: {} to {}.", err, new_name)),
     }
