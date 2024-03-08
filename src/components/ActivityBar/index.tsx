@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { invoke } from "@tauri-apps/api/tauri";
 import { MdOutlineViewKanban } from "react-icons/md";
 import { LuFileEdit, LuTrash2, LuRefreshCcw, LuHelpCircle, LuSettings, LuArrowUp01, LuArrowUp10, LuCalendarDays, LuLightbulb, LuTerminal, LuArrowDownAZ, LuArrowDownZA } from "react-icons/lu";
 
-import { createFile, deleteFile, getFile } from "../../utils/fs";
+import { getFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
 import { SortType } from "../../utils/sort";
 import { SettingsMenu } from "../Settings";
@@ -28,8 +29,8 @@ const ActivityBar: React.FC = () => {
         const nextFreeUntiledNumber = files.map(obj => getFile(obj).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
         const fileName = `Untiled ${nextFreeUntiledNumber}.${extension}`;
 
-        createFile(fileName)
-            .then((_) => {
+        invoke("create_file", { fileName: fileName, initialContent: "" })
+            .then(() => {
                 updateFileList();
             })
             .catch((err) => {
@@ -78,7 +79,7 @@ const ActivityBar: React.FC = () => {
 
     const removeFile = () => {
         if (openedFile !== "") {
-            deleteFile(openedFile)
+            invoke("delete_file", { filePath: openedFile })
                 .then(() => {
                     setOpenedFile("");
                     updateFileList();

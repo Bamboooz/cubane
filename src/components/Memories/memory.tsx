@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { invoke } from "@tauri-apps/api/tauri";
 import { LuMoreVertical, LuLightbulb } from "react-icons/lu";
 
-import { readFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
 import MemoryContext from "./MemoryContext";
-import { invoke } from "@tauri-apps/api/tauri";
 
 interface MemoryProps {
     filePath: string;
@@ -23,7 +22,7 @@ const Memory: React.FC<MemoryProps> = ({ filePath }) => {
     const [text, setText] = useState<string>("");
 
     useEffect(() => {
-        readFile(filePath)
+        invoke("read_file", { filePath: filePath })
             .then((value) => {
                 setText(value as string);
                 updateFileList();

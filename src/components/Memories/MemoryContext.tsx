@@ -1,7 +1,7 @@
 import React from "react";
+import { invoke } from "@tauri-apps/api/tauri";
 import { LuCopy, LuPencil, LuTrash2 } from "react-icons/lu";
 
-import { deleteFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
 import Context from "../common/Context";
 
@@ -28,7 +28,7 @@ const MemoryContext: React.FC<MemoryContextProps> = ({ x, y, closeContextMenu, f
         closeContextMenu();
 
         if (filePath !== "") {
-            deleteFile(filePath)
+            invoke("delete_file", { filePath: filePath })
                 .then(() => {
                     setOpenedFile("");
                     updateFileList();

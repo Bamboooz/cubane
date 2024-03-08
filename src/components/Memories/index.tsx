@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { LuSend, LuImage, LuLink } from "react-icons/lu";
+import { invoke } from "@tauri-apps/api/tauri";
+import { LuSend } from "react-icons/lu";
 
 import { useAppState } from "../../state/appState";
-import { getFile, createFile } from "../../utils/fs";
+import { getFile } from "../../utils/fs";
 import Memory from "./Memory";
 
 const Memories: React.FC = () => {
@@ -18,7 +19,7 @@ const Memories: React.FC = () => {
         const fileName = `Untiled ${nextFreeUntiledNumber}.memo`;
 
         if (newNoteText !== "") {
-            createFile(fileName, newNoteText)
+            invoke("create_file", { fileName: fileName, initialContent: newNoteText })
                 .then(() => {
                     console.log("Successfully created a new memory.");
                     updateFileList();

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAutosave } from "react-autosave";
 import { MDXEditorMethods } from "@mdxeditor/editor";
+import { invoke } from "@tauri-apps/api/tauri";
 import "@mdxeditor/editor/style.css";
 
-import { writeFile, readFile } from "../../utils/fs";
 import MarkdownCounter from "./MarkdownCounter";
 import MarkdownEditorView from "./MarkdownEditorView";
 
@@ -16,7 +16,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
     const editorRef = useRef<MDXEditorMethods>(null);
 
     const updateFileContents = () => {
-        readFile(openedFile)
+        invoke("read_file", { filePath: openedFile })
             .then((value) => {
                 setText(value as string);
             })
@@ -26,7 +26,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
     };
 
     const updateFile = () => {
-        writeFile(openedFile, text)
+        invoke("write_file", { filePath: openedFile, content: text })
             .catch((err) => {
                 console.error(`Failed to write to a file: ${err}.`);
             });
