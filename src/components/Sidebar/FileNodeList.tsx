@@ -3,9 +3,10 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import FileNode from "../File";
 import { useAppState } from "../../state/appState";
-import { SortType, sortListAZ, sortListFirstUpdated, sortListLastUpdated, sortListZA } from "../../utils/sort";
-import { getFile } from "../../utils/fs";
+import { SortType } from "../../utils/sort";
+import { FileList, getFile } from "../../utils/fs";
 import { cn } from "../../utils/tw";
+import { invoke } from "@tauri-apps/api/tauri";
 
 interface FileNodeListProps {
     name: string;
@@ -16,27 +17,31 @@ const FileNodeList: React.FC<FileNodeListProps> = ({ name, targetExtension }) =>
     const [nodeListOpened, setNodeListOpened] = useState<boolean>(true);
     const files = useAppState((state) => state.files);
     const sideBarSort = useAppState((state) => state.sideBarSort);
-    const targetFiles = files.filter((file) => getFile(file.path).extension === targetExtension);
+    const targetFiles = files.filter((file) => getFile(file).extension === targetExtension);
     
-    const [sortedTargetFiles, setSortedTargetFiles] = useState<{path: string}[]>([]);
+    const [sortedTargetFiles, setSortedTargetFiles] = useState<FileList>([]);
 
     useEffect(() => {
         const sortFiles = async () => {
-            if (sideBarSort === SortType.AZ) {
-                setSortedTargetFiles(sortListAZ(targetFiles));
-            } else if (sideBarSort === SortType.ZA) {
-                setSortedTargetFiles(sortListZA(targetFiles));
-            } else if (sideBarSort === SortType.LAST_UPDATED) {
-                const sorted = await sortListLastUpdated(targetFiles);
-                setSortedTargetFiles(sorted);
-            } else {
-                const sorted = await sortListFirstUpdated(targetFiles);
-                setSortedTargetFiles(sorted);
-            }
+            const sortQuery = sideBarSort === SortType.AZ
+                ? "sort_files_az"
+                : sideBarSort === SortType.ZA
+                ? "sort_files_za"
+                : sideBarSort === SortType.LAST_UPDATED
+                ? "sort_files_last_updated"
+                : "sort_files_first_updated";
+
+            invoke(sortQuery, { files: targetFiles })
+                .then((sorted) => {
+                    setSortedTargetFiles(sorted as FileList);
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         };
     
         sortFiles();
-    }, [sideBarSort, files]);    
+    }, [sideBarSort, files]);
 
     return (
         <>
@@ -52,7 +57,7 @@ const FileNodeList: React.FC<FileNodeListProps> = ({ name, targetExtension }) =>
 
                 <div className={cn("w-full transition-all overflow-hidden ease-in-out duration-800", nodeListOpened ? "max-h-screen mb-4" : "max-h-0 mb-0")}>
                     {sortedTargetFiles.map((file, index) => (
-                        <FileNode key={index} filePath={file.path} />
+                        <FileNode key={index} filePath={file} />
                     ))}
                 </div>
             </div>

@@ -14,7 +14,8 @@ const SideBar: React.FC = () => {
     }, []);
 
     async function openFolderInExplorer() {
-        await invoke("open_in_explorer", { filePath: "C://Users//Bambu//AppData//Roaming//cubane" });
+        const folderPath = await invoke("cubane_path", {});
+        await invoke("open_in_explorer", { filePath: folderPath });
     };
 
     return (

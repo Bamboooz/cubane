@@ -5,6 +5,7 @@ mod filesystem;
 mod explorer;
 mod splash;
 mod date;
+mod sort;
 
 fn preload() {
     match filesystem::verify_cubane_dir() {
@@ -32,6 +33,10 @@ fn main() {
             filesystem::cubane_path,
             explorer::open_in_explorer,
             splash::close_splashscreen,
+            sort::sort_files_az,
+            sort::sort_files_za,
+            sort::sort_files_last_updated,
+            sort::sort_files_first_updated,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

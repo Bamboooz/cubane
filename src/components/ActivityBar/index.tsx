@@ -25,7 +25,7 @@ const ActivityBar: React.FC = () => {
 
     const newFile = (extension: string) => {
         // find the next free Untiled {number} file name for creation
-        const nextFreeUntiledNumber = files.map(obj => getFile(obj.path).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
+        const nextFreeUntiledNumber = files.map(obj => getFile(obj).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
         const fileName = `Untiled ${nextFreeUntiledNumber}.${extension}`;
 
         createFile(fileName)

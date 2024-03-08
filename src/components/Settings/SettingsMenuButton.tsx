@@ -12,8 +12,8 @@ interface SettingsMenuButtonProps {
 const SettingsMenuButton: React.FC<SettingsMenuButtonProps> = ({ name, pageId, pageSelected, setPageSelected }) => {
     return (
         <>
-            <button title={name} onClick={() => setPageSelected(pageId)} className={cn("w-full flex items-center justify-start px-3 py-1 rounded-md", pageSelected === pageId ? "bg-accent text-neutral-200 shadow-2xl" : "text-neutral-300 transition-colors-fast hover:bg-node hover:bg-opacity-50")}>
-                <p className="text-[14px]">{name}</p>
+            <button title={name} onClick={() => setPageSelected(pageId)} className={cn("w-full flex items-center justify-start px-3 py-1 rounded-md", pageSelected === pageId ? "bg-accent shadow-2xl" : "transition-colors-fast hover:bg-node hover:bg-opacity-50")}>
+                <p className={cn("text-[14px]", pageSelected === pageId ? "text-neutral-200" : "text-neutral-300")}>{name}</p>
             </button>
         </>
     );

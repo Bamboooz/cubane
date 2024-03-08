@@ -1,7 +1,8 @@
 import { useStore } from "zustand";
 import { createStore } from "zustand/vanilla";
+import { invoke } from "@tauri-apps/api/tauri";
 
-import { getFileList, FileList } from "../utils/fs";
+import { FileList } from "../utils/fs";
 import { SortType } from "../utils/sort";
 
 enum ProductState {
@@ -26,10 +27,11 @@ const appStateStore = createStore<AppState>()((set) => ({
     files: [] as FileList,
     updateFileList: async () => {
         try {
-            const updatedFiles = await getFileList();
-            set({ files: updatedFiles });
+            const updatedFiles = await invoke("read_directory", {});
+            set({ files: updatedFiles  as FileList });
         } catch (error) {
             console.error(error);
+            set({ files: [] as FileList });
         }
     },
     sideBarSort: SortType.AZ,

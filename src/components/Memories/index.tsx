@@ -9,12 +9,12 @@ const Memories: React.FC = () => {
     const [newNoteText, setNewNoteText] = useState<string>("");
     const files = useAppState((state) => state.files);
     const updateFileList = useAppState((state) => state.updateFileList);
-    const targetFiles = files.filter((file) => getFile(file.path).extension === "memo");
+    const targetFiles = files.filter((file) => getFile(file).extension === "memo");
 
     const addMemory = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const nextFreeUntiledNumber = files.map(obj => getFile(obj.path).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
+        const nextFreeUntiledNumber = files.map(obj => getFile(obj).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
         const fileName = `Untiled ${nextFreeUntiledNumber}.memo`;
 
         if (newNoteText !== "") {
@@ -61,7 +61,7 @@ const Memories: React.FC = () => {
                 </form>
 
                 {targetFiles.map((file, index) => (
-                    <Memory key={index} filePath={file.path} />
+                    <Memory key={index} filePath={file} />
                 ))}
             </div>
         </>

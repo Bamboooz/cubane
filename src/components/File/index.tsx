@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { BsMarkdown } from "react-icons/bs";
+import { LuCalendarDays, LuLightbulb } from "react-icons/lu";
+import { MdOutlineViewKanban } from "react-icons/md";
 
 import { cn } from "../../utils/tw";
-import { getFile, getFileIcon } from "../../utils/fs";
+import { getFile } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
 import FileContext from "./FileContext";
 
@@ -22,6 +25,14 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
 
     const className = cn("w-full h-6 flex shrink-0 pl-12 pr-4 py-4 items-center justify-start rounded-md gap-2", openedFile === filePath ? "bg-node" : "bg-transparent hover:bg-node hover:bg-opacity-50");
 
+    const fileIcon = getFile(filePath).extension === "md"
+        ? <BsMarkdown />
+        : getFile(filePath).extension === "schedule"
+        ? <LuCalendarDays />
+        : getFile(filePath).extension === "kanban"
+        ? <MdOutlineViewKanban />
+        : <LuLightbulb />;
+
     const selectFile = () => {
         setOpenedFile(filePath);
     };
@@ -38,7 +49,7 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
     return (
         <>
             <button onContextMenu={(e) => handleContextMenu(e)} onClick={selectFile} className={className}>
-                {React.cloneElement(getFileIcon(filePath), { className: "text-neutral-300 text-[18px]" })}
+                {React.cloneElement(fileIcon, { className: "text-neutral-300 text-[18px]" })}
                 <p className="text-[12px] text-neutral-300">{getFile(filePath).name}</p>
 
                 {contextMenu.show &&

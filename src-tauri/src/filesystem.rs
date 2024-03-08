@@ -2,15 +2,9 @@ use std::env;
 use std::path::{Path, PathBuf};
 use std::fs;
 
-use serde::Serialize;
 use lazy_static::lazy_static;
 
 use crate::date::format_duration;
-
-#[derive(Serialize)]
-pub struct FileEntry {
-    path: String,
-}
 
 #[cfg(target_os = "windows")]
 lazy_static! {
@@ -91,7 +85,7 @@ pub fn delete_file(file_path: &str) -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn read_directory() -> Result<Vec<FileEntry>, String> {
+pub fn read_directory() -> Result<Vec<String>, String> {
     verify_cubane_dir().map_err(|err| format!("{}", err))?;
 
     let mut files = Vec::new();
@@ -102,7 +96,7 @@ pub fn read_directory() -> Result<Vec<FileEntry>, String> {
 
         if path.is_file() {
             let path_str = path.to_string_lossy().into_owned();
-            files.push(FileEntry { path: path_str });
+            files.push(path_str);
         }
     }
 
