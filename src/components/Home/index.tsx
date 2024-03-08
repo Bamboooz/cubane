@@ -20,7 +20,7 @@ const Home: React.FC = () => {
                 updateFileList();
             })
             .catch((err) => {
-                console.error(`Failed to create file: ${fileName}, error: ${err}.`); 
+                console.error(err); 
             })
     };
 

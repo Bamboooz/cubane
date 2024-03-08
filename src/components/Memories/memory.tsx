@@ -27,8 +27,8 @@ const Memory: React.FC<MemoryProps> = ({ filePath }) => {
                 setText(value as string);
                 updateFileList();
             })
-            .catch((error) => {
-                console.error(error);
+            .catch((err) => {
+                console.error(err);
             });
     }, []);
     

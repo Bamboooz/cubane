@@ -21,12 +21,11 @@ const Memories: React.FC = () => {
         if (newNoteText !== "") {
             invoke("create_file", { fileName: fileName, initialContent: newNoteText })
                 .then(() => {
-                    console.log("Successfully created a new memory.");
                     updateFileList();
                     setNewNoteText("");
                 })
                 .catch((err) => {
-                    console.error(`Failed to create a new memory: ${err}.`);
+                    console.error(err);
                 });
         }
     };

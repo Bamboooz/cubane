@@ -86,12 +86,12 @@ pub fn delete_file(file_path: &str) -> Result<(), String> {
 
 #[tauri::command]
 pub fn read_directory() -> Result<Vec<String>, String> {
-    verify_cubane_dir().map_err(|err| format!("{}", err))?;
+    verify_cubane_dir().map_err(|err| format!("Failed to verify cubane directory: {}", err))?;
 
     let mut files = Vec::new();
 
-    for entry in fs::read_dir(&cubane_path()).map_err(|e| e.to_string())? {
-        let entry = entry.map_err(|e| e.to_string())?;
+    for entry in fs::read_dir(&cubane_path()).map_err(|e| format!("Failed to read directory: {}", e))? {
+        let entry = entry.map_err(|e| format!("Error processing directory entry: {}", e))?;
         let path = entry.path();
 
         if path.is_file() {

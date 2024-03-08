@@ -34,7 +34,7 @@ const MemoryContext: React.FC<MemoryContextProps> = ({ x, y, closeContextMenu, f
                     updateFileList();
                 })
                 .catch((err) => {
-                   console.error(`Failed to remove file: ${filePath}, error: ${err}.`); 
+                   console.error(err); 
                 });
         }
     };

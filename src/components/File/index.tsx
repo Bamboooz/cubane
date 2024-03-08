@@ -61,6 +61,12 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
     const renameFile = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (editingText === getFile(filePath).name) {
+            // optimize
+            setEditing(false);
+            return;
+        }
+
         invoke("rename_file", { filePath: filePath, newName: editingText })
             .then(() => {
                 updateFileList();
@@ -68,7 +74,7 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
                 setEditingText(getFile(filePath).name);
             })
             .catch((err) => {
-                console.error(`Failed to rename file: ${filePath}, error: ${err}.`); 
+                console.error(err); 
             });
     };
 

@@ -20,15 +20,15 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ openedFile }) => {
             .then((value) => {
                 setText(value as string);
             })
-            .catch((error) => {
-                console.error(error);
+            .catch((err) => {
+                console.error(err);
             });
     };
 
     const updateFile = () => {
         invoke("write_file", { filePath: openedFile, content: text })
             .catch((err) => {
-                console.error(`Failed to write to a file: ${err}.`);
+                console.error(err);
             });
     };
     

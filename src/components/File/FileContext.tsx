@@ -35,7 +35,7 @@ const FileContext: React.FC<FileContextProps> = ({ x, y, setEditing, closeContex
                 updateFileList();
             })
             .catch((err) => {
-               console.error(`Failed to remove file: ${filePath}, error: ${err}.`); 
+               console.error(err); 
             });
     };
 
