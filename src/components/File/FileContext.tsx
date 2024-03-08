@@ -8,11 +8,12 @@ import Context from "../common/Context";
 interface FileContextProps {
     x: number;
     y: number;
+    setEditing: React.Dispatch<React.SetStateAction<boolean>>;
     closeContextMenu: () => void;
     filePath: string;
 }
 
-const FileContext: React.FC<FileContextProps> = ({ x, y, closeContextMenu, filePath }) => {
+const FileContext: React.FC<FileContextProps> = ({ x, y, setEditing, closeContextMenu, filePath }) => {
     const updateFileList = useAppState((state) => state.updateFileList);
     const setOpenedFile = useAppState((state) => state.setOpenedFile);
 
@@ -22,21 +23,20 @@ const FileContext: React.FC<FileContextProps> = ({ x, y, closeContextMenu, fileP
 
     const renameFile = () => {
         closeContextMenu();
+        setEditing(true);
     };
 
     const removeFile = () => {
         closeContextMenu();
 
-        if (filePath !== "") {
-            invoke("delete_file", { filePath: filePath })
-                .then(() => {
-                    setOpenedFile("");
-                    updateFileList();
-                })
-                .catch((err) => {
-                   console.error(`Failed to remove file: ${filePath}, error: ${err}.`); 
-                });
-        }
+        invoke("delete_file", { filePath: filePath })
+            .then(() => {
+                setOpenedFile("");
+                updateFileList();
+            })
+            .catch((err) => {
+               console.error(`Failed to remove file: ${filePath}, error: ${err}.`); 
+            });
     };
 
     return (

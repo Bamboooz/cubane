@@ -121,7 +121,12 @@ pub fn write_file(file_path: &str, content: &str) -> Result<(), String> {
 
 #[tauri::command]
 pub fn rename_file(file_path: &str, new_name: &str) -> Result<(), String> {
-    match fs::rename(file_path, new_name) {
+    let path = Path::new(file_path);
+    let parent = path.parent().unwrap_or(Path::new(""));
+    let extension = path.extension().unwrap_or_default();
+    let new_path = parent.join(format!("{}.{}", new_name, extension.to_string_lossy()));
+
+    match fs::rename(file_path, new_path) {
         Ok(_) => Ok(()),
         Err(err) => Err(format!("Failed to rename a file: {} to {}.", err, new_name)),
     }
