@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+    @apply font-sans bg-primary h-screen w-screen !overflow-hidden;
+}
+
+@layer components {
+    .transition-colors-fast {
+        @apply transition-colors duration-75;
+    }
+}
+
+p, h1, img {
+    @apply select-none;
+}
+
+::-webkit-scrollbar {
+    @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-header rounded-md;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}

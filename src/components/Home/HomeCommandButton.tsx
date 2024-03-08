@@ -10,24 +10,24 @@ interface HomeCommandButtonProps {
 const HomeCommandButton: React.FC<HomeCommandButtonProps> = ({ name, trigger, onClick }) => {
     return (
         <>
-            <button onClick={onClick} className="flex items-center justify-center gap-2 text-neutral-500 text-[16px] hover:text-neutral-400 hover:active:text-neutral-300">
-                <p>{name}</p>
+            <button onClick={onClick} className="flex items-center justify-center gap-2 text-neutral-400 hover:text-neutral-300">
+                <p  className="text-[12px]">{`${name}:`}</p>
             
                 <div className="flex items-center justify-center gap-1">
-                    <div className="bg-node rounded-md mt-1 h-[20px] px-1 text-[12px] flex items-center justify-center">
-                        <LuCommand />
+                    <div className="bg-node rounded-md h-[20px] px-1 flex items-center justify-center">
+                        <LuCommand className="text-[12px]" />
                     </div>
 
-                    <p>+</p>
+                    <p className="text-[12px]">+</p>
 
-                    <div className="bg-node rounded-md mt-1 h-[20px] px-1 text-[12px] flex items-center justify-center">
-                        <p>Shift</p>
+                    <div className="bg-node rounded-md h-[20px] px-1 flex items-center justify-center">
+                        <p className="text-[12px]">Shift</p>
                     </div>
 
-                    <p>+</p>
+                    <p className="text-[12px]">+</p>
 
-                    <div className="bg-node rounded-md mt-1 h-[20px] px-1 text-[12px] flex items-center justify-center">
-                        <p>{trigger}</p>
+                    <div className="bg-node rounded-md h-[20px] px-1 flex items-center justify-center">
+                        <p className="text-[12px]">{trigger}</p>
                     </div>
                 </div>
             </button>

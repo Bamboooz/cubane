@@ -4,12 +4,17 @@ import { LuCommand } from "react-icons/lu";
 interface CommandNodeProps {
     name: string;
     triggerKeys: string[];
+    setCommandPaletteModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CommandNode: React.FC<CommandNodeProps> = ({ name, triggerKeys }) => {
+const CommandNode: React.FC<CommandNodeProps> = ({ name, triggerKeys, setCommandPaletteModalOpened }) => {
+    const executeCommand = () => {
+        setCommandPaletteModalOpened(false);
+    };
+
     return (
         <>
-            <div className="w-full flex items-center justify-between h-8 px-2 rounded-md hover:bg-node hover:bg-opacity-50">
+            <button onClick={executeCommand} className="w-full flex items-center justify-between shrink-0 h-8 px-2 rounded-md hover:bg-node hover:bg-opacity-50">
                <p className="text-[14px] text-neutral-300">{name}</p>
 
                <div className="flex items-center justify-end gap-1">
@@ -27,7 +32,7 @@ const CommandNode: React.FC<CommandNodeProps> = ({ name, triggerKeys }) => {
                        </React.Fragment>
                    ))}
                </div>
-           </div>
+           </button>
         </>
     );
 };

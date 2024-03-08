@@ -15,7 +15,7 @@ const SplashHeader: React.FC = () => {
                 </div>
 
                 <div data-tauri-drag-region className="absolute w-full flex items-center justify-center">
-                    <p data-tauri-drag-region className="text-neutral-300 text-[12px]">Loading...</p>
+                    <p data-tauri-drag-region className="text-neutral-300 text-[12px]">cubane</p>
                 </div>
 
                 <div className="flex h-full z-20">

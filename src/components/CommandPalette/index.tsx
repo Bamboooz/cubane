@@ -16,9 +16,9 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ commandPaletteModalOpen
 
     useEffect(() => {
         const registerPaletteOpen = async () => {
-            await unregister("CommandOrControl+K");
+            await unregister("CommandOrControl+Shift+P");
 
-            await register("CommandOrControl+K", () => {
+            await register("CommandOrControl+Shift+P", () => {
                 setCommandPaletteModalOpened(true);
             });
         };
@@ -27,27 +27,37 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ commandPaletteModalOpen
     }, []);
 
     const commands: { [name: string]: string[] } = {
+        "Save current file": ["CommandOrControl", "S"],
+        "Use dark mode": [],
+        "Use light mode": [],
+        "Change theme": [],
+        "Open settings": ["CommandOrControl", ","],
+        "Show release notes": [],
+        "Close current tab": ["CommandOrControl", "W"],
+        "Close window": ["CommandOrControl", "Shift", "W"],
+        "Open help": ["F1"],
         "New note": ["CommandOrControl", "Shift", "N"],
         "New schedule": ["CommandOrControl", "Shift", "H"],
         "New kanban board": ["CommandOrControl", "Shift", "K"],
         "New memory": ["CommandOrControl", "Shift", "M"],
+        "Command palette: Open command palette": ["CommandOrControl", "Shift", "P"],
     };
 
     const displayedCommands = Object.keys(commands).filter(key => key.toLowerCase().includes(searchQuery.toLowerCase()));
     
     return (
         <>
-            <Modal modalOpened={commandPaletteModalOpened} setModalOpened={setCommandPaletteModalOpened} className="flex flex-col items-center justify-start overflow-auto w-[70vw] max-h-[70vh] lg:w-[60vw] xl:w-[45vw]">
+            <Modal modalOpened={commandPaletteModalOpened} setModalOpened={setCommandPaletteModalOpened} className="flex flex-col items-center justify-start overflow-hidden w-[70vw] max-h-[70vh] lg:w-[60vw] xl:w-[45vw]">
                 <div className="w-full h-12 px-4 py-1 flex items-center justify-center">
                     <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Select a command..." type="text" className="w-full h-full text-[14px] text-neutral-300 bg-transparent outline-none" />
                 </div>
                 
                 <div className="w-full h-[1px] bg-border" />
 
-                <div className={cn("h-full w-full min-h-[20vh] flex flex-col items-center p-2", displayedCommands.length > 0 ? "justify-start" : "justify-center")}>
+                <div className={cn("h-full w-full min-h-[20vh] flex flex-col items-center p-2 overflow-auto", displayedCommands.length > 0 ? "justify-start" : "justify-center")}>
                     {displayedCommands.length > 0
                         ? displayedCommands.map((name, index) => (
-                            <CommandNode key={index} name={name} triggerKeys={commands[name]} />
+                            <CommandNode key={index} setCommandPaletteModalOpened={setCommandPaletteModalOpened} name={name} triggerKeys={commands[name]} />
                         ))
                         : <p className="text-[16px] text-neutral-400">No commands found.</p>
                     }
