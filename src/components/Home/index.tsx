@@ -2,7 +2,7 @@ import React from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 
 import { useAppState } from "../../state/appState";
-import { getFile } from "../../utils/fs";
+import { findFilenameSuccessor } from "../../utils/fs";
 import icon from "../../assets/icon.png";
 import HomeCommandButton from "./HomeCommandButton";
 
@@ -11,17 +11,13 @@ const Home: React.FC = () => {
     const updateFileList = useAppState((state) => state.updateFileList);
 
     const newFile = (extension: string) => {
-        // find the next free Untiled {number} file name for creation
-        const nextFreeUntiledNumber = files.map(obj => getFile(obj).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
-        const fileName = `Untiled ${nextFreeUntiledNumber}.${extension}`;
-
-        invoke("create_file", { fileName: fileName, initialContent: "" })
+        invoke("create_file", { fileName: findFilenameSuccessor(`Untiled.${extension}`, files), initialContent: "" })
             .then(() => {
                 updateFileList();
             })
             .catch((err) => {
                 console.error(err); 
-            })
+            });
     };
 
     return (

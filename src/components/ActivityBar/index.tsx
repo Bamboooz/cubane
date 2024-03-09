@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { MdOutlineViewKanban } from "react-icons/md";
 import { LuFileEdit, LuTrash2, LuRefreshCcw, LuHelpCircle, LuSettings, LuArrowUp01, LuArrowUp10, LuCalendarDays, LuLightbulb, LuTerminal, LuArrowDownAZ, LuArrowDownZA } from "react-icons/lu";
 
-import { getFile } from "../../utils/fs";
+import { findFilenameSuccessor } from "../../utils/fs";
 import { useAppState } from "../../state/appState";
 import { SortType } from "../../utils/sort";
 import { SettingsMenu } from "../Settings";
@@ -25,17 +25,13 @@ const ActivityBar: React.FC = () => {
     const setSideBarSort = useAppState((state) => state.setSideBarSort);
 
     const newFile = (extension: string) => {
-        // find the next free Untiled {number} file name for creation
-        const nextFreeUntiledNumber = files.map(obj => getFile(obj).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
-        const fileName = `Untiled ${nextFreeUntiledNumber}.${extension}`;
-
-        invoke("create_file", { fileName: fileName, initialContent: "" })
+        invoke("create_file", { fileName: findFilenameSuccessor(`Untiled.${extension}`, files), initialContent: "" })
             .then(() => {
                 updateFileList();
             })
             .catch((err) => {
                 console.error(err); 
-            })
+            });
     };
 
     const formatIcon = () => {

@@ -4,6 +4,7 @@ import { LuCopy, LuPencil, LuTrash2 } from "react-icons/lu";
 
 import { useAppState } from "../../state/appState";
 import Context from "../common/Context";
+import { findFilenameSuccessor, getFile } from "../../utils/fs";
 
 interface FileContextProps {
     x: number;
@@ -14,11 +15,28 @@ interface FileContextProps {
 }
 
 const FileContext: React.FC<FileContextProps> = ({ x, y, setEditing, closeContextMenu, filePath }) => {
+    const files = useAppState((state) => state.files);
     const updateFileList = useAppState((state) => state.updateFileList);
     const setOpenedFile = useAppState((state) => state.setOpenedFile);
 
     const copyFile = () => {
         closeContextMenu();
+        
+        invoke("read_file", { filePath: filePath })
+            .then((contents) => {
+                const fileName = `${getFile(filePath).name}.${getFile(filePath).extension}`;
+
+                invoke("create_file", { fileName: findFilenameSuccessor(fileName, files), initialContent: contents })
+                    .then(() => {
+                        updateFileList();
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     };
 
     const renameFile = () => {

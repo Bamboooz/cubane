@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { LuSend } from "react-icons/lu";
 
 import { useAppState } from "../../state/appState";
-import { getFile } from "../../utils/fs";
+import { findFilenameSuccessor, getFile } from "../../utils/fs";
 import Memory from "./Memory";
 
 const Memories: React.FC = () => {
@@ -15,17 +15,14 @@ const Memories: React.FC = () => {
     const addMemory = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const nextFreeUntiledNumber = files.map(obj => getFile(obj).name).filter(str => /^Untiled \d+$/.test(str)).map(str => parseInt(str.split(' ')[1])).sort((a, b) => a - b).reduce((acc, number) => (number > acc ? acc : number + 1), 1);
-        const fileName = `Untiled ${nextFreeUntiledNumber}.memo`;
-
         if (newNoteText !== "") {
-            invoke("create_file", { fileName: fileName, initialContent: newNoteText })
+            invoke("create_file", { fileName: findFilenameSuccessor(`Untiled.memo`, files), initialContent: newNoteText })
                 .then(() => {
                     updateFileList();
                     setNewNoteText("");
                 })
                 .catch((err) => {
-                    console.error(err);
+                    console.error(err); 
                 });
         }
     };

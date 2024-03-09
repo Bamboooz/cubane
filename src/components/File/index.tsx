@@ -24,6 +24,7 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
     const [contextMenu, setContextMenu] = useState(initialContextMenu);
     const [editing, setEditing] = useState<boolean>(false);
     const [editingText, setEditingText] = useState<string>(getFile(filePath).name);
+    const [displayingError, setDisplayingError] = useState<boolean>(false);
 
     const fileNodeRef = useRef<HTMLDivElement>(null);
     const inputEditorRef = useRef<HTMLInputElement>(null);
@@ -74,7 +75,12 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
                 setEditingText(getFile(filePath).name);
             })
             .catch((err) => {
-                console.error(err); 
+                console.error(err);
+                setDisplayingError(true);
+
+                setTimeout(() => {
+                    setDisplayingError(false);
+                }, 1000); 
             });
     };
 
@@ -96,7 +102,7 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
                         <FileContext x={contextMenu.x} y={contextMenu.y} setEditing={setEditing} closeContextMenu={contextMenuClose} filePath={filePath} />
                     }
                 </div>
-                : <div ref={fileNodeRef} className="w-full h-6 flex shrink-0 pl-12 pr-4 py-4 items-center justify-start rounded-md gap-2 bg-node bg-opacity-50 border-solid border-[1px] border-accent">
+                : <div ref={fileNodeRef} className={cn("w-full h-6 flex shrink-0 pl-12 pr-4 py-4 items-center justify-start rounded-md gap-2 bg-node bg-opacity-50 border-solid border-[1px]", displayingError ? "border-red-900" : "border-accent")}>
                     {React.cloneElement(fileIcon, { className: "text-neutral-300 text-[18px]" })}
                     <form onSubmit={(e) => renameFile(e)} className="flex items-center justify-center h-full">
                         <input ref={inputEditorRef} onFocus={(e) => e.target.select()} type="text" value={editingText} onChange={(e) => setEditingText(e.target.value)} className="text-[12px] text-neutral-300 bg-transparent outline-none" />
@@ -109,6 +115,5 @@ const FileNode: React.FC<FileNodeProps> = ({ filePath }) => {
             }
         </>
     );
-};
-
+};8
 export default FileNode;
